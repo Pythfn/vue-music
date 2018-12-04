@@ -4,8 +4,26 @@
   </div>
 </template>
 <script>
-export default {}
+import { getRecommend } from 'api/recommend'
+export default {
+  date () {
+    return {
+      sliderList: []
+    }
+  },
+  created () {
+    this._getRecommend()
+  },
+  methods: {
+    _getRecommend () {
+      getRecommend().then((res) => {
+        this.sliderList = res.data
+        console.log(this.sliderList)
+      })
+    }
+  }
+}
+
 </script>
 <style lang="stylus">
-
 </style>
