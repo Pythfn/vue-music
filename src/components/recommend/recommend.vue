@@ -1,14 +1,20 @@
 <template>
   <div class="recommend">
-    推荐
+    <div class="slider"  v-if="recommends.length">
+      <div v-for="item in recommends" :key="item.id">
+        <a :href="item.linkUrl">
+           <img :src="item.picUrl">
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import { getRecommend } from 'api/recommend'
 export default {
-  date () {
+  data () {
     return {
-      sliderList: []
+      recommends: []
     }
   },
   created () {
@@ -17,8 +23,10 @@ export default {
   methods: {
     _getRecommend () {
       getRecommend().then((res) => {
-        this.sliderList = res.data
-        console.log(this.sliderList)
+        if (res.code === 0) {
+          console.log(res)
+          this.recommends = res.data.slider
+        }
       })
     }
   }
