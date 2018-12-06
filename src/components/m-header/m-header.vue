@@ -14,6 +14,7 @@ export default {}
   .m-header
     width:100%
     text-align:center
+    margin-top:8px
     .apptitle
       display:inline-block
       vertical-align:top

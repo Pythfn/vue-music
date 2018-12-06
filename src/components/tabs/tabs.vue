@@ -38,10 +38,12 @@ export default {
 <style lang="stylus">
 .tabs
   display:flex
-  height:44px
+  height:35px
   justify-content:space-between
+  margin-top:6px
   .tab-item
     text-align:center
+    line-height:35px
     width:25%
   .router-link-active .item
     color:red
