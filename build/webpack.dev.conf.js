@@ -49,13 +49,21 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     watchOptions: {
       poll: config.dev.poll,
     },
-    before(app) {
-      app.get('/seller', (req, res) => {
-        res.json({
-          errno: 0,
-          data: {'sadas':'asdasd'}
-        })//接口返回json数据，上面配置的数据seller就赋值给data请求后调用
-      })
+    before(apiRoutes) {
+      apiRoutes.get('/getDiscList', function (req, res) {
+        var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
+        axios.get(url, {
+          headers: {
+            referer: 'https://c.y.qq.com/',
+            host: 'c.y.qq.com'
+          },
+          params: req.query
+  }).then((response) => {
+    res.json(response.data)
+  }).catch((e) => {
+    console.log(e)
+  })
+})
     }
   },
 
