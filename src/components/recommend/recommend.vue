@@ -1,19 +1,40 @@
 <template>
   <div class="recommend">
-    <div class="slider-box" v-if="recommends.length">
-      <slider>
-          <div v-for="item in recommends" :key="item.id">
-            <a :href="item.linkUrl">
-               <img :src="item.picUrl">
-            </a>
-          </div>
-      </slider>
-    </div>
+    <scroll :data="recommends" class="recommend-content">
+      <div>
+        <div class="slider-box">
+          <slider v-if="recommends.length">
+              <div v-for="item in recommends" :key="item.id">
+                <a :href="item.linkUrl">
+                   <img :src="item.picUrl">
+                </a>
+              </div>
+          </slider>
+        </div>
+        <div class="recommend-title">
+          <h1>热门歌单推荐</h1>
+        </div>
+        <div>
+          <ul class="recommend-list">
+            <li v-for="item in discList" :key="item.dissid" class="item">
+              <div class="img">
+                <img :src="item.imgurl" class="list-item-img">
+              </div>
+              <div class="details">
+                <h2 class="title" v-html="item.creator.name"></h2>
+                <span class="text" v-html="item.dissname"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </scroll>
   </div>
 </template>
 <script>
 import { getRecommend, getDiscList } from 'api/recommend'
 import Slider from 'base/slider/slider'
+import Scroll from 'base/scroll/scroll'
 export default {
   data () {
     return {
@@ -22,7 +43,8 @@ export default {
     }
   },
   components: {
-    Slider
+    Slider,
+    Scroll
   },
   created () {
     this._getRecommend()
@@ -40,8 +62,8 @@ export default {
     _getDiscList () {
       getDiscList().then((res) => {
         if (res.code === 0) {
-          console.log(res)
           this.discList = res.data.list
+          console.log(this.discList)
         }
       })
     }
@@ -50,10 +72,38 @@ export default {
 
 </script>
 <style lang="stylus" scoped>
-  .recommend
-    width:100%
+@import '~common/stylus/variable.styl'
+
+.recommend
+  width:100%
+  .recommend-content
+    position: absolute
+    top:88px
+    bottom:0
     overflow:hidden
+    width:100%
     .slider-box
-      width: 100%
+      height: 0
       overflow: hidden
+      padding-bottom: 40%
+      background: $color-background
+    .recommend-title
+      text-align:center
+      margin:20px 0
+      color: $color-theme
+    .recommend-list
+      .item
+        display: flex
+        .img
+          display: flex
+          margin: 20px
+          .list-item-img
+            width: 60px
+            height: 60px
+        .details
+          margin-top:20px
+          line-height:30px
+          align-content: center
+          .text
+            margin-top:5px
 </style>
