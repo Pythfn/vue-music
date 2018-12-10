@@ -8,7 +8,7 @@ import BScroll from 'better-scroll'
 export default {
   name: 'scroll',
   props: {
-    click:{
+    click: {
       type: Boolean,
       default: true
     },
@@ -36,8 +36,8 @@ export default {
     }
   },
   watch: {
-    data(){
-      setTimeout(()=>{
+    data() {
+      setTimeout(() => {
         this.scroll.refresh()
       }, 20)
     }
