@@ -9,7 +9,7 @@ import Singer from 'common/js/singer.js'
 export default {
   data() {
     return {
-      list: [],
+      singerList: [],
       tempList: []
     }
   },
@@ -20,24 +20,36 @@ export default {
     _getSingerList() {
       getSingerList().then((res) => {
         if (res.code === 0) {
-          console.log(res.data.list)
-          this.list = this.formatList(res.data.list)
-          console.log(this.list)
-
+          this.singerList = this.formatList(res.data.list)
+          console.log(this.singerList)
         }
       })
     },
     formatList(list) {
-      let new_list = []
-      let hot_list = [{
-        title: 'Hot Singer',
+      let hotSingerLength = 10
+      let newList = []
+      let temp = []
+      let hotList = [{
+        title: '热门',
         items: []
       }]
-      let alpha_list = []
+      hotList.items = []
       list.forEach((item) => {
-        hot_list.items.push(new Singer(Fsinger_id, Fsinger_name))
+        temp.push(new Singer(item.Fsinger_mid, item.Fsinger_name, item.Findex))
       })
-      return hot_list
+      for (let i = 0; i < hotSingerLength; i++) {
+        hotList.items.push(temp[i])
+      }
+      newList.push(hotList)
+      temp.forEach((item) => {
+        if (item.key.search(/^[a-zA-Z]$/) === 0) {
+          if (!newList[item.key]) {
+            newList[item.key] = []
+          }
+          newList[item.key].push(item)
+        }
+      })
+      return newList
     }
   }
 }
