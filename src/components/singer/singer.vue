@@ -3,15 +3,17 @@
     <scroll class="bscroll">
       <div>
         <ul>
-          <ul v-for="item of singerList">
-            {{ item.title }}
+          <ul v-for="ul in singerList">
+            {{ ul.title }}
+            <li v-for="item in ul.items">
+              {{ item.name }}
+            </li>
           </ul>
         </ul>
       </div>
     </scroll>
   </div>
 </template>
-
 <script>
 import { getSingerList } from 'api/singer.js'
 import Singer from 'common/js/singer.js'
@@ -40,9 +42,10 @@ export default {
     },
     formatList(list) {
       let hotSingerLength = 10
+      const HOT_NAME = '热门'
       let newList = {
-        hot : {
-          title: '热门',
+        hot: {
+          title: HOT_NAME,
           items: []
         }
       }
@@ -65,6 +68,17 @@ export default {
           newList[item.key].items.push(item)
         }
       })
+
+      //  singerlist 对象排序
+      let hot = []
+      let alpha = []
+      for (let key in newList) {
+        if (key.title === HOT_NAME){
+          hot.push(newList[key])
+        }
+      }
+      console.log(hot)
+      console.log(Object.keys(newList).sort())
       return newList
     }
   }
