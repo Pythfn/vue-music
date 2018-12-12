@@ -18,7 +18,7 @@
           <ul class="recommend-list">
             <li v-for="item in discList" :key="item.dissid" class="item">
               <div class="img">
-                <img :src="item.imgurl" class="list-item-img">
+                <img v-lazy="item.imgurl" class="list-item-img">
               </div>
               <div class="details">
                 <h2 class="title" v-html="item.creator.name"></h2>
