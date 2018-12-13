@@ -1,12 +1,14 @@
 <template>
   <div class="singer">
     <listview :list="singerList"></listview>
+    <loading v-show="!singerList.length"></loading>
   </div>
 </template>
 <script>
 import { getSingerList } from 'api/singer.js'
 import Singer from 'common/js/singer.js'
 import listview from 'base/listview/listview'
+import loading from 'base/loading/loading'
 export default {
   data() {
     return {
@@ -16,7 +18,8 @@ export default {
   },
   components: {
     scroll,
-    listview
+    listview,
+    loading
   },
   created() {
     this._getSingerList()

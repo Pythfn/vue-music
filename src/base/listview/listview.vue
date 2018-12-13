@@ -1,12 +1,12 @@
 <template>
   <div class="list">
-    <scroll class="bscroll" :data="list">
-      <div>
+    <scroll class="bscroll" :data="list" ref="scroll">
+      <div class="list-box">
         <ul v-for="ul in list" :key="ul.title" class="list-ul">
           <h2 class="list-title">{{ ul.title }}</h2>
           <li v-for="item in ul.items" :key="item.id" class="list-item">
             <div class="list-img">
-              <img v-lazy="item.img">
+              <img v-lazy="item.img" @load="loadImg">
               </div>
               <div class="list-name">
                 <span>{{ item.name }}</span>
@@ -37,6 +37,11 @@ export default {
         return res.title.substr(0, 1)
       })
     }
+  },
+  methods: {
+    loadImg () {
+      this.$refs.scroll.refresh()
+    }
   }
 }
 
@@ -59,7 +64,7 @@ export default {
       font-size:13px
     .list-item
       display: flex
-      margin-bottom:20px
+      padding-bottom:20px
       .list-img
         margin:0 20px
       .list-img img

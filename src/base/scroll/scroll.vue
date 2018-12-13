@@ -24,21 +24,27 @@ export default {
   mounted() {
     setTimeout(() => {
       this.initBScroll()
-      console.log('bscroll')
+      console.log('bscroll start')
     }, 20)
   },
   methods: {
     initBScroll() {
-      this.scroll = new BScroll(this.$refs.wrapper, {
-        click: this.click,
-        probeType: this.probeType
-      })
+      if (this.$refs.wrapper) {
+        this.scroll = new BScroll(this.$refs.wrapper, {
+          click: this.click,
+          probeType: this.probeType
+        })
+      }
+    },
+    refresh() {
+      this.scroll && this.scroll.refresh()
+      console.log('bscroll refresh')
     }
   },
   watch: {
     data() {
       setTimeout(() => {
-        this.scroll.refresh()
+        this.refresh()
       }, 20)
     }
   }
