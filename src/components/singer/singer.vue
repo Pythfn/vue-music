@@ -1,26 +1,12 @@
 <template>
   <div class="singer">
-    <scroll class="bscroll" :data="singerList">
-      <div class="singer-list">
-        <ul v-for="ul in singerList" :key="ul.title" class="singer-ul">
-          <h2 class="singer-title">{{ ul.title }}</h2>
-          <li v-for="item in ul.items" :key="item.id" class="singer-item">
-            <div class="singer-img">
-              <img v-lazy="item.img">
-            </div>
-              <div class="singer-name">
-                <span>{{ item.name }}</span>
-              </div>
-          </li>
-        </ul>
-      </div>
-    </scroll>
+    <listview :list="singerList"></listview>
   </div>
 </template>
 <script>
 import { getSingerList } from 'api/singer.js'
 import Singer from 'common/js/singer.js'
-import scroll from 'base/scroll/scroll'
+import listview from 'base/listview/listview'
 export default {
   data() {
     return {
@@ -29,7 +15,8 @@ export default {
     }
   },
   components: {
-    scroll
+    scroll,
+    listview
   },
   created() {
     this._getSingerList()
@@ -93,28 +80,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '~common/stylus/variable.styl'
-.singer
-  width: 100%
-  .bscroll
-    position: absolute
-    top:88px
-    bottom: 0
-    width:100%
-    overflow: hidden
-    .singer-title
-      background:$color-text-d
-      padding:10px 0
-      padding-left:20px
-    .singer-item
-      display: flex
-      .singer-img
-        margin:10px 20px
-      .singer-img img
-        width: 50px
-        height: 50px
-        border-radius: 50px
-       .singer-name
-         line-height: 60px
-         color:$color-text-l
+
 </style>
