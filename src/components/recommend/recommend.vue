@@ -52,9 +52,6 @@ export default {
   created () {
     this._getRecommend()
     this._getDiscList()
-    setTimeout(()=>{
-      this.$refs.scroll.refresh()
-    },5000)
   },
   methods: {
     _getRecommend () {

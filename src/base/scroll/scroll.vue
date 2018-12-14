@@ -19,6 +19,10 @@ export default {
     data: {
       type: Array,
       default: null
+    },
+    listenScroll: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
@@ -33,6 +37,12 @@ export default {
         this.scroll = new BScroll(this.$refs.wrapper, {
           click: this.click,
           probeType: this.probeType
+        })
+      }
+      if (this.listenScroll) {
+        const self = this
+        this.scroll.on('scroll', (p) => {
+          self.$emit('scroll', p)
         })
       }
     },

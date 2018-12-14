@@ -1,12 +1,12 @@
 <template>
   <div class="list">
-    <scroll class="bscroll" :data="list" ref="scroll">
+    <scroll class="bscroll" ref="scroll" :data="list" :listenScroll="true" @scroll="scroll">
       <div class="list-box">
-        <ul v-for="ul in list" :key="ul.title" class="list-ul">
+        <ul v-for="ul in list" :key="ul.title" class="list-ul" ref="listGroup">
           <h2 class="list-title">{{ ul.title }}</h2>
           <li v-for="item in ul.items" :key="item.id" class="list-item">
             <div class="list-img">
-              <img v-lazy="item.img" @load="loadImg">
+              <img v-lazy="item.img">
               </div>
               <div class="list-name">
                 <span>{{ item.name }}</span>
@@ -28,6 +28,13 @@ export default {
   props: {
     list: Array
   },
+  data() {
+    return {
+      listGroupHeight: [],
+      scrollY: -1,
+      listIndex: 0
+    }
+  },
   components: {
     scroll
   },
@@ -38,9 +45,38 @@ export default {
       })
     }
   },
+  created() {
+    this.listGroupHeight = []
+  },
+  updated() {
+    this.getListGroupHeight()
+  },
   methods: {
-    loadImg () {
-      this.$refs.scroll.refresh()
+    scroll(p) {
+      this.scrollY = -p.y
+    },
+    getListGroupHeight() {
+      const listGroup = this.$refs.listGroup
+      let groupHeight = 0
+      this.listGroupHeight.push(0)
+      for (let i = 0; i < listGroup.length; i++) {
+        let item = listGroup[i]
+        groupHeight += item.clientHeight
+        this.listGroupHeight.push(groupHeight)
+        console.log(this.listGroupHeight[i])
+      }
+    }
+  },
+  watch: {
+    scrollY (newy) {
+      const a = ''
+      for (let i=0; i<this.listGroupHeight.length; i++){
+        let top = this.listGroupHeight[i]
+        let bottom = this.listGroupHeight[i+1]
+        if(newy >= top && newy <=bottom){
+          console.log(i)
+        }
+      }
     }
   }
 }
