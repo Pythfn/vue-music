@@ -1,6 +1,8 @@
 <template>
   <div class="list">
-    <scroll class="bscroll" ref="scroll" :data="list" :listenScroll="true" @scroll="scroll">
+    <scroll class="bscroll" ref="scroll" :data="list" :listenScroll="true" 
+    @scroll="scroll"
+    :probetype=3>
       <div class="list-box">
         <ul v-for="ul in list" :key="ul.title" class="list-ul" ref="listGroup">
           <h2 class="list-title">{{ ul.title }}</h2>
@@ -17,7 +19,10 @@
     </scroll>
     <div class="alphaList">
       <ul>
-        <li v-for="item in alphaList" :key="item">{{ item }}</li>
+        <li v-for="(item, key) in alphaList" :key="key"
+        :class="{'isselect' : listIndex === key }"
+        @touchstart="touchTo"
+        @touchmove.stop.prevent="touchMoveTo">{{ item }}</li>
       </ul>
     </div>
   </div>
@@ -32,7 +37,7 @@ export default {
     return {
       listGroupHeight: [],
       scrollY: -1,
-      listIndex: 0
+      listIndex: 0,
     }
   },
   components: {
@@ -46,7 +51,10 @@ export default {
     }
   },
   created() {
+    this.ALPHALIST_TOPHEIGHT = 130
+    this.ALPHAITEM_HEIGHT = 20
     this.listGroupHeight = []
+    this.listGroup = []
   },
   updated() {
     this.getListGroupHeight()
@@ -56,25 +64,38 @@ export default {
       this.scrollY = -p.y
     },
     getListGroupHeight() {
-      const listGroup = this.$refs.listGroup
+      this.listGroup = this.$refs.listGroup
       let groupHeight = 0
       this.listGroupHeight.push(0)
-      for (let i = 0; i < listGroup.length; i++) {
-        let item = listGroup[i]
+      for (let i = 0; i < this.listGroup.length; i++) {
+        let item = this.listGroup[i]
         groupHeight += item.clientHeight
         this.listGroupHeight.push(groupHeight)
-        console.log(this.listGroupHeight[i])
       }
+    },
+    touchTo (e) {
+      let scrollIndex = Math.round((e.targetTouches[0].pageY - this.ALPHALIST_TOPHEIGHT) / this.ALPHAITEM_HEIGHT)
+      this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],200)
+      this.listIndex = scrollIndex
+    },
+    touchMoveTo (e) {
+      setTimeout(() => {
+        let scrollIndex = Math.round((e.targetTouches[0].pageY - this.ALPHALIST_TOPHEIGHT) / this.ALPHAITEM_HEIGHT)
+        this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],200)
+        this.listIndex = scrollIndex
+        console.log(this.listIndex)  
+      }, 50)
     }
   },
   watch: {
-    scrollY (newy) {
+    scrollY(newy) {
       const a = ''
-      for (let i=0; i<this.listGroupHeight.length; i++){
+      for (let i = 0; i < this.listGroupHeight.length; i++) {
         let top = this.listGroupHeight[i]
-        let bottom = this.listGroupHeight[i+1]
-        if(newy >= top && newy <=bottom){
-          console.log(i)
+        let bottom = this.listGroupHeight[i + 1]
+        if (newy >= top && newy <= bottom) {
+          this.listIndex = i
+          return
         }
       }
     }
@@ -122,6 +143,8 @@ export default {
     opacity:0.5
     border-radius:25px
     li
-      margin-top: 5px
-      font-size: 12px
+      font-size: 15px
+      height: 20px
+    .isselect
+      color: red
 </style>

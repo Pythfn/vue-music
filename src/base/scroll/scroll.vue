@@ -12,7 +12,7 @@ export default {
       type: Boolean,
       default: true
     },
-    probeType: {
+    probetype: {
       type: Number,
       default: 1
     },
@@ -36,7 +36,7 @@ export default {
       if (this.$refs.wrapper) {
         this.scroll = new BScroll(this.$refs.wrapper, {
           click: this.click,
-          probeType: this.probeType
+          probeType: this.probetype
         })
       }
       if (this.listenScroll) {
@@ -49,6 +49,9 @@ export default {
     refresh() {
       this.scroll && this.scroll.refresh()
       console.log('bscroll refresh')
+    },
+    scrollToElement (e, time, offsetX, offsetY, easing) {
+      this.scroll && this.scroll.scrollToElement(e, time, offsetX, offsetY, easing)
     }
   },
   watch: {
