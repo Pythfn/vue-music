@@ -25,7 +25,6 @@
         @touchmove.stop.prevent="touchMoveTo">{{ item }}</li>
       </ul>
     </div>
-    <div class="grouptitle" v-show="grouptitle" v-text="grouptitle"></div>
   </div>
 </template>
 <script type="text/javascript">
@@ -49,12 +48,6 @@ export default {
       return this.list.map((res) => {
         return res.title.substr(0, 1)
       })
-    },
-    grouptitle() {
-      if (this.scrollY < 0 ){
-        return ""
-      }
-      return this.list[this.listIndex] ? this.list[this.listIndex].title : ""
     }
   },
   created() {
@@ -82,16 +75,13 @@ export default {
     },
     touchTo (e) {
       let scrollIndex = Math.round((e.targetTouches[0].pageY - this.ALPHALIST_TOPHEIGHT) / this.ALPHAITEM_HEIGHT)
-      this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],0)
+      this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],200)
       this.listIndex = scrollIndex
     },
     touchMoveTo (e) {
       setTimeout(() => {
         let scrollIndex = Math.round((e.targetTouches[0].pageY - this.ALPHALIST_TOPHEIGHT) / this.ALPHAITEM_HEIGHT)
-        if (scrollIndex > this.listGroup.length-1 || scrollIndex < 0 ){
-          return
-        }
-        this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],0)
+        this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],200)
         this.listIndex = scrollIndex
         console.log(this.listIndex)  
       }, 50)
@@ -157,14 +147,4 @@ export default {
       height: 20px
     .isselect
       color: red
-  .grouptitle
-    position:absolute
-    background:black
-    top:88px
-    left:0
-    right:0
-    padding:8px 0
-    padding-left:20px
-    margin-bottom:20px
-    font-size:13px
 </style>
