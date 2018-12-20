@@ -23,6 +23,7 @@ export default {
   },
   created() {
     this._getSingerList()
+    console.log(this.$store.state.test)
   },
   methods: {
     _getSingerList() {
