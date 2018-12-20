@@ -1,8 +1,6 @@
 <template>
   <div class="list">
-    <scroll class="bscroll" ref="scroll" :data="list" :listenScroll="true" 
-    @scroll="scroll"
-    :probetype=3>
+    <scroll class="bscroll" ref="scroll" :data="list" :listenScroll="true" @scroll="scroll" :probetype=3>
       <div class="list-box">
         <ul v-for="ul in list" :key="ul.title" class="list-ul" ref="listGroup">
           <h2 class="list-title">{{ ul.title }}</h2>
@@ -19,10 +17,7 @@
     </scroll>
     <div class="alphaList">
       <ul>
-        <li v-for="(item, key) in alphaList" :key="key"
-        :class="{'isselect' : listIndex === key }"
-        @touchstart="touchTo"
-        @touchmove.stop.prevent="touchMoveTo">{{ item }}</li>
+        <li v-for="(item, key) in alphaList" :key="key" :class="{'isselect' : listIndex === key }" @touchstart="touchTo" @touchmove.stop.prevent="touchMoveTo">{{ item }}</li>
       </ul>
     </div>
     <div class="grouptitle" v-show="grouptitle" v-text="grouptitle"></div>
@@ -38,7 +33,7 @@ export default {
     return {
       listGroupHeight: [],
       scrollY: -1,
-      listIndex: 0,
+      listIndex: 0
     }
   },
   components: {
@@ -51,10 +46,10 @@ export default {
       })
     },
     grouptitle() {
-      if (this.scrollY < 0 ){
-        return ""
+      if (this.scrollY < 0) {
+        return ''
       }
-      return this.list[this.listIndex] ? this.list[this.listIndex].title : ""
+      return this.list[this.listIndex] ? this.list[this.listIndex].title : ''
     }
   },
   created() {
@@ -80,26 +75,25 @@ export default {
         this.listGroupHeight.push(groupHeight)
       }
     },
-    touchTo (e) {
+    touchTo(e) {
       let scrollIndex = Math.round((e.targetTouches[0].pageY - this.ALPHALIST_TOPHEIGHT) / this.ALPHAITEM_HEIGHT)
-      this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],0)
+      this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex], 0)
       this.listIndex = scrollIndex
     },
-    touchMoveTo (e) {
+    touchMoveTo(e) {
       setTimeout(() => {
         let scrollIndex = Math.round((e.targetTouches[0].pageY - this.ALPHALIST_TOPHEIGHT) / this.ALPHAITEM_HEIGHT)
-        if (scrollIndex > this.listGroup.length-1 || scrollIndex < 0 ){
+        if (scrollIndex > this.listGroup.length - 1 || scrollIndex < 0) {
           return
         }
-        this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex],0)
+        this.$refs.scroll.scrollToElement(this.listGroup[scrollIndex], 0)
         this.listIndex = scrollIndex
-        console.log(this.listIndex)  
+        console.log(this.listIndex)
       }, 50)
     }
   },
   watch: {
     scrollY(newy) {
-      const a = ''
       for (let i = 0; i < this.listGroupHeight.length; i++) {
         let top = this.listGroupHeight[i]
         let bottom = this.listGroupHeight[i + 1]
@@ -111,7 +105,6 @@ export default {
     }
   }
 }
-
 </script>
 <style lang="stylus" scoped>
 @import '~common/stylus/variable.styl'
