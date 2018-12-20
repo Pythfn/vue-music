@@ -2,7 +2,7 @@
   <div class="singer">
     <listview :list="singerList" @select="selectSinger"></listview>
     <loading v-show="!singerList.length"></loading>
-    <router-view></router-view>
+  <router-view></router-view>
   </div>
 </template>
 <script>

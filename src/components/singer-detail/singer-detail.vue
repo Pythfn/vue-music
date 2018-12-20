@@ -1,5 +1,7 @@
 <template>
-  <div class="singer-detail">11111111111111111111111111111111111111111111111111111111111111111111</div>
+  <transition name="slide">
+    <div class="singer-detail">11111111111111111111111111111111111111111111111111111111111111111111</div>
+  </transition>
 </template>
 <script>
 export default {
@@ -17,4 +19,5 @@ export default {
   right:0
   background: red
   z-index: 99
+
 </style>
