@@ -1,7 +1,8 @@
 <template>
   <div class="singer">
-    <listview :list="singerList"></listview>
+    <listview :list="singerList" @select="selectSinger"></listview>
     <loading v-show="!singerList.length"></loading>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -9,6 +10,7 @@ import { getSingerList } from 'api/singer.js'
 import Singer from 'common/js/singer.js'
 import listview from 'base/listview/listview'
 import loading from 'base/loading/loading'
+import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -21,10 +23,6 @@ export default {
     listview,
     loading
   },
-  created() {
-    this._getSingerList()
-    console.log(this.$store.state.test)
-  },
   methods: {
     _getSingerList() {
       getSingerList().then((res) => {
@@ -34,6 +32,7 @@ export default {
         }
       })
     },
+    //  格式化jsonp数据格式
     formatList(list) {
       let hotSingerLength = 10
       const HOT_NAME = '热门'
@@ -78,7 +77,22 @@ export default {
         return a.title.charCodeAt(0) - b.title.charCodeAt(0)
       })
       return hot.concat(alpha)
-    }
+    },
+
+    // 将子组件点击的歌手item传递到父组件singer，再储存进vuex
+    selectSinger (singer) {
+      this.$router.push({
+        path: `/singer/${singer.id}`
+      })
+      this.setSinger(singer)
+      console.log(this.$store.state.singer)
+    },
+    ...mapMutations({
+      'setSinger': 'SET_SINGER'
+    })
+  },
+  created() {
+    this._getSingerList()
   }
 }
 </script>

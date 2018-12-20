@@ -4,7 +4,7 @@
       <div class="list-box">
         <ul v-for="ul in list" :key="ul.title" class="list-ul" ref="listGroup">
           <h2 class="list-title">{{ ul.title }}</h2>
-          <li v-for="item in ul.items" :key="item.id" class="list-item">
+          <li v-for="item in ul.items" :key="item.id" class="list-item" @click="select(item)">
             <div class="list-img">
               <img v-lazy="item.img">
               </div>
@@ -90,6 +90,9 @@ export default {
         this.listIndex = scrollIndex
         console.log(this.listIndex)
       }, 50)
+    },
+    select(item) {
+      this.$emit('select', item)
     }
   },
   watch: {
