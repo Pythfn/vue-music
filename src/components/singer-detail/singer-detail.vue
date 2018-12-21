@@ -19,5 +19,9 @@ export default {
   right:0
   background: red
   z-index: 99
+.slide-enter-active, .slide-leave-active
+  transition: all 0.2s
+.slide-enter, .slide-leave-to
+  transform: translate3d(100%, 0, 0)
 
 </style>
