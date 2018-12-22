@@ -48,7 +48,7 @@ export default {
     },
     refresh() {
       this.scroll && this.scroll.refresh()
-      console.log('bscroll refresh')
+    //  console.log('bscroll refresh')
     },
     scrollToElement (e, time, offsetX, offsetY, easing) {
       this.scroll && this.scroll.scrollToElement(e, time, offsetX, offsetY, easing)

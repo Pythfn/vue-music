@@ -28,7 +28,7 @@ export default {
       getSingerList().then((res) => {
         if (res.code === 0) {
           this.singerList = this.formatList(res.data.list)
-          console.log(this.singerList)
+        //  console.log(this.singerList)
         }
       })
     },
