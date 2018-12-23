@@ -27,7 +27,6 @@ export default {
 .songList
   width:100%
   height:100%
-  background: $color-background
   .song-item
     padding-top:25px
     padding-left:25px
