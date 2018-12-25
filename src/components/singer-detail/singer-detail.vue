@@ -12,7 +12,7 @@
 import musicList from 'components/music-list/music-list'
 import { mapGetters } from 'vuex'
 import { getSingerDetail } from 'api/singer'
-import { createSong } from 'common/js/song'
+import { createSong, getSongVkey } from 'common/js/song'
 
 export default {
   data() {
@@ -41,9 +41,14 @@ export default {
         if (data.subcode === 0) {
           this.data = data.data.list
           console.log(this.data)
-          for (let item of this.data) {
-            this.songList.push(createSong(item.musicData))
-          }
+          this.data.forEach((item)=> {
+            let { musicData } = item
+            getSongVkey(musicData.songmid).then((res) => {
+              // console.log('这首歌的vkey获取到了')
+              const vkey = res.data.items[0].vkey
+              this.songList.push(createSong(musicData, vkey))
+          })
+        })
           console.log(this.songList)
         }
       })
