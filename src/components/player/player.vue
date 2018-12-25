@@ -16,7 +16,7 @@
       <div class="songName">{{ currentSong.name }}</div>
       <div class="singerName">{{ currentSong.singer }}</div>
     </div>
-    <audio ref="audio" :src="currentSong.url"></audio>
+    <audio ref="audio" src="http://dl.stream.qqmusic.qq.com/http://dl.stream.qqmusic.qq.com/C400001J5QJL1pRQYB.m4a?guid=9531727088&vkey=FCA0081816DD8E9746315965CDDC32B2EB7ED9FEB9FF1AD03421359E945C944D9C12F32C3A7B3A244D438B901E59B1FA4A2782DF232D881F&uin=0&fromtag=38"></audio>
   </div>
 </template>
 <script>
@@ -69,5 +69,4 @@ export default {
     right:0
     height:80px
     background: $color-background
-    
 </style>
