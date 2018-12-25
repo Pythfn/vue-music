@@ -49,6 +49,7 @@
 </template>
 <script>
 import SongList from 'base/song-list/song-list'
+import { mapActions } from 'vuex'
 import Scroll from 'base/scroll/scroll'
 
 const SINGER_TITLE_HEIGHT = 40
@@ -87,12 +88,15 @@ export default {
       this.scrollY = p.y
     },
     selectSong(item, index) {
-      console.log(item)
-      this.$store.state.playList = this.songList
-      this.$store.state.playing = true
-      this.$store.state.fullScreen = true
-      this.$store.state.currentIndex = index
-    }
+      this.startPlay({
+        data: this.songList,
+        index
+      })
+      console.log(this.$store.state.playing)
+    },
+    ...mapActions([
+      'startPlay'
+    ])
   },
   created() {
     this.probetype = 3

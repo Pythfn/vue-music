@@ -85,7 +85,6 @@ export default {
         path: `/singer/${singer.id}`
       })
       this.setSinger(singer)
-      console.log(this.$store.state.singer)
     },
     ...mapMutations({
       'setSinger': 'SET_SINGER'

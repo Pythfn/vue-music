@@ -40,7 +40,7 @@ export default {
       getSingerDetail(this.getSinger.id).then((data) => {
         if (data.subcode === 0) {
           this.data = data.data.list
-          console.log(this.data)
+          //  console.log(this.data)
           this.data.forEach((item) => {
             let { musicData } = item
             getSongVkey(musicData.songmid).then((res) => {
@@ -49,7 +49,7 @@ export default {
               this.songList.push(createSong(musicData, vkey))
             })
           })
-          console.log(this.songList)
+          //  console.log(this.songList)
         }
       })
     }

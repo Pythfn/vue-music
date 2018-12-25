@@ -4,22 +4,22 @@ const mutations = {
   [types.SET_SINGER](state, singer) {
     state.singer = singer
   },
-  [types.PLAYING](state, flag) {
+  [types.SET_PLAYING](state, flag) {
     state.playing = flag
   },
-  [types.FULL_SCREEN](state, flag) {
+  [types.SET_FULL_SCREEN](state, flag) {
     state.fullScreen = flag
   },
-  [types.PLAY_LIST](state, data) {
+  [types.SET_PLAY_LIST](state, data) {
     state.playList = data
   },
-  [types.SEQUENCE_LIST](state, data) {
+  [types.SET_SEQUENCE_LIST](state, data) {
     state.sequenceList = data
   },
-  [types.PLAY_MODE](state, data) {
+  [types.SET_PLAY_MODE](state, data) {
     state.playMode = data
   },
-  [types.CURRENT_INDEX](state, index) {
+  [types.SET_CURRENT_INDEX](state, index) {
     state.currentIndex = index
   }
 }
