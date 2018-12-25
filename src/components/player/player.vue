@@ -14,7 +14,7 @@
       </div>
       <div class="player-panel">
         <div class="icon i-1">
-          <i>1</i>
+          <i></i>
         </div>
         <div class="icon i-2" @click="prevPlay">
           <i class="icon-prev"></i>
@@ -25,12 +25,20 @@
         <div class="icon i-4" @click="nextPlay">
           <i class="icon-next"></i>
         </div>
-        <div class="icon i-5">5</div>
+        <div class="icon i-5"></div>
       </div>
     </div>
-    <div class="mini-player" v-show="!fullScreen">
-      <div class="songName">{{ currentSong.name }}</div>
-      <div class="singerName">{{ currentSong.singer }}</div>
+    <div class="mini-player" v-show="!fullScreen" @click="openNormalPlayer">
+      <div class="mini-songAlbum">
+        <img :src="currentSong.image" class="mini-songAlbumImg">
+      </div>
+      <div class="mini-player-title">
+        <div class="mini-songName">{{ currentSong.name }}</div>
+        <div class="mini-singerName">{{ currentSong.singer }}</div>
+      </div>
+      <div class="icon TongglePlay" @click.stop="togglePlay">
+        <i :class="iconTogglePlay"></i>
+      </div>
     </div>
     <audio ref="audio" :src="currentSong.url"></audio>
   </div>
@@ -51,6 +59,9 @@ export default {
     ])
   },
   methods: {
+    openNormalPlayer() {
+      this.setFullScreen(true)
+    },
     minimizePlay() {
       this.setFullScreen(false)
     },
@@ -115,7 +126,11 @@ export default {
     background: $color-background
     .back
       position:fixed
-      padding:10px
+      margin-top:15px
+      margin-left:20px
+      color: $color-theme
+      font-size:20px
+      transform:rotate(270deg)
     .player-title
       text-align: center
       margin:0 auto
@@ -154,6 +169,27 @@ export default {
     bottom:0
     left:0
     right:0
-    height:80px
-    background: $color-background
+    height:60px
+    background: $color-highlight-background
+    display:flex
+    .mini-songAlbum
+      margin-top:10px
+      margin-left:30px
+      .mini-songAlbumImg
+        width:40px
+        border-radius:50%
+    .mini-player-title
+      margin:10px
+      .mini-songName
+        color:$color-text
+      .mini-singerName
+        margin-top:10px
+        color:$color-text-l
+        font-size:13px
+    .TongglePlay
+      font-size:35px
+      position:fixed
+      margin-top:10px
+      right:60px
+      color:$color-theme
 </style>
