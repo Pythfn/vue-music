@@ -11,6 +11,21 @@
       <div class="songAlbum">
         <img :src="currentSong.image" class="songAlbumImg">
       </div>
+      <div class="player-panel">
+        <div class="icon i-1">
+          <i>1</i>
+        </div>
+        <div class="icon i-2">
+          <i class="icon-prev"></i>
+        </div>
+        <div class="icon i-3">
+          <i class="icon-play"></i>
+        </div>
+        <div class="icon i-4">
+          <i class="icon-next"></i>
+        </div>
+        <div class="icon i-5">5</div>
+      </div>
     </div>
     <div class="mini-player" v-show="!fullScreen">
       <div class="songName">{{ currentSong.name }}</div>
@@ -56,10 +71,30 @@ export default {
       text-align: center
       margin:0 auto
       padding-top:10px
+      .songName
+        color:$color-text
+        font-size:$font-size-large
+      .singerName
+        color:$color-text-l
+        font-size:$font-size-medium
+        margin-top:5px
+    .player-panel
+      display:flex
+      position:fixed
+      justify-content:center
+      align-items:center
+      width:100%
+      bottom:60px
+      .icon
+        padding:20px
+        font-size:30px
+        color:$color-theme
+      .i-3
+        font-size:45px
     .songAlbum
       margin:0 auto
       text-align: center
-      margin-top:50px
+      margin-top:60px
       .songAlbumImg
         border-radius:50%
   .mini-player
