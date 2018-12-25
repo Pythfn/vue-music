@@ -41,14 +41,14 @@ export default {
         if (data.subcode === 0) {
           this.data = data.data.list
           console.log(this.data)
-          this.data.forEach((item)=> {
+          this.data.forEach((item) => {
             let { musicData } = item
             getSongVkey(musicData.songmid).then((res) => {
               // console.log('这首歌的vkey获取到了')
               const vkey = res.data.items[0].vkey
               this.songList.push(createSong(musicData, vkey))
+            })
           })
-        })
           console.log(this.songList)
         }
       })

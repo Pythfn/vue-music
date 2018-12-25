@@ -69,5 +69,4 @@ export default {
     right:0
     height:80px
     background: $color-background
-    
 </style>
