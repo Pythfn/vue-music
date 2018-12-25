@@ -42,7 +42,7 @@
      ref="songScroll"
     >
       <div class="songList">
-        <song-list :songs="songList"></song-list>
+        <song-list :songs="songList" @select="selectSong"></song-list>
       </div>
     </scroll>
   </div>
@@ -85,6 +85,13 @@ export default {
     },
     scroll(p) {
       this.scrollY = p.y
+    },
+    selectSong(item, index) {
+      console.log(item)
+      this.$store.state.playList = this.songList
+      this.$store.state.playing = true
+      this.$store.state.fullScreen = true
+      this.$store.state.currentIndex = index
     }
   },
   created() {

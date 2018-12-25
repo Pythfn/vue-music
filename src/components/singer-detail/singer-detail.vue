@@ -40,6 +40,7 @@ export default {
       getSingerDetail(this.getSinger.id).then((data) => {
         if (data.subcode === 0) {
           this.data = data.data.list
+          console.log(this.data)
           for (let item of this.data) {
             this.songList.push(createSong(item.musicData))
           }
