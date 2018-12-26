@@ -12,9 +12,20 @@
       <div class="songAlbum">
         <img :src="currentSong.image" class="songAlbumImg">
       </div>
+      <div class="progress-panel">
+        <div class="timeLeft">
+          {{ currentAudioTimeX }}
+        </div>
+        <div class="progress">
+          <progress-bar :progressNum="progressNum" @moveprogress="onMoveProgress"></progress-bar>
+        </div>
+        <div class="timeRight">
+           {{ currentAudioDurationX }}
+        </div>
+      </div>
       <div class="player-panel">
-        <div class="icon i-1">
-          <i></i>
+        <div class="icon i-1" @click="changePlayMode">
+          <i :class="iconMode"></i>
         </div>
         <div class="icon i-2" @click="prevPlay">
           <i class="icon-prev"></i>
@@ -40,22 +51,39 @@
         <i :class="iconTogglePlay"></i>
       </div>
     </div>
-    <audio ref="audio" :src="currentSong.url"></audio>
+    <audio ref="audio" :src="currentSong.url" @timeupdate="audioTime" @ended="onEnded"></audio>
   </div>
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import progressBar from 'base/progress-bar/progress-bar'
 export default {
+  data() {
+    return {
+      currentAudioTime: '',
+      progressNum: 0
+    }
+  },
   computed: {
     iconTogglePlay() {
       return !this.playing ? 'icon-play' : 'icon-pause'
+    },
+    iconMode() {
+      return 'icon-loop'
+    },
+    currentAudioTimeX() {
+      return this.playing ? this.formatSongTime(this.currentAudioTime) : '00:00'
+    },
+    currentAudioDurationX() {
+      return this.playing ? this.formatSongTime(this.currentSong.duration) : '00:00'
     },
     ...mapGetters([
       'playing',
       'playList',
       'fullScreen',
       'currentIndex',
-      'currentSong'
+      'currentSong',
+      'playMode'
     ])
   },
   methods: {
@@ -87,10 +115,38 @@ export default {
         this.setCurrentIndex(this.currentIndex + 1)
       }
     },
+    changePlayMode() {
+      this.setPlayMode(1)
+      console.log(this.playMode)
+    },
+    audioTime(e) {
+      this.currentAudioTime = e.target.currentTime
+    },
+    formatSongTime(time) {
+      let min = time / 60 | 0
+      let sec = time % 60 | 0
+      return `${this.formatTimeZero(min)}:${this.formatTimeZero(sec)}`
+    },
+    formatTimeZero(time) {
+      if (time.toString().length === 1) {
+        return `0${time}`
+      } else {
+        return time
+      }
+    },
+    onMoveProgress(p) {
+      let time = this.currentSong.duration * p | 0
+      console.log(time)
+      this.$refs.audio.currentTime = time
+    },
+    onEnded() {
+      this.nextPlay()
+    },
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
       setPlaying: 'SET_PLAYING',
-      setCurrentIndex: 'SET_CURRENT_INDEX'
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlayMode: 'SET_PLAY_MODE'
     })
   },
   watch: {
@@ -107,8 +163,15 @@ export default {
     currentSong(newSong) {
       this.$nextTick(() => {
         this.$refs.audio.play()
+        this.setPlaying(true)
       })
+    },
+    currentAudioTime(newTime) {
+      this.progressNum = newTime / this.currentSong.duration * 100 | 0
     }
+  },
+  components: {
+    progressBar
   }
 }
 
@@ -135,6 +198,12 @@ export default {
       text-align: center
       margin:0 auto
       padding-top:10px
+      overflow: hidden
+      -webkit-line-clamp: 2
+      text-overflow: ellipsis
+      display: -webkit-box
+      -webkit-box-orient: vertical
+      width:60%
       .songName
         color:$color-text
         font-size:$font-size-large
@@ -145,13 +214,24 @@ export default {
       .songIndex
         font-size:$font-size-medium
         margin-top:5px
+    .progress-panel
+      position:fixed
+      width:100%
+      bottom:20%
+      margin-top:60px
+      display:flex
+      justify-content:center
+      .progress
+        width:65%
+      .timeRight
+        margin-left:5px
     .player-panel
       display:flex
       position:fixed
       justify-content:center
       align-items:center
       width:100%
-      bottom:60px
+      bottom:5%
       .icon
         padding:20px
         font-size:30px
@@ -182,6 +262,10 @@ export default {
       margin:10px
       .mini-songName
         color:$color-text
+        white-space: nowrap
+        text-overflow:ellipsis
+        overflow:hidden
+        width:70%
       .mini-singerName
         margin-top:10px
         color:$color-text-l
