@@ -25,7 +25,7 @@
       </div>
       <div class="player-panel">
         <div class="icon i-1" @click="changePlayMode">
-          <i :class="iconMode"></i>
+          <i :class="iconPlayMode"></i>
         </div>
         <div class="icon i-2" @click="prevPlay">
           <i class="icon-prev"></i>
@@ -57,6 +57,8 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import progressBar from 'base/progress-bar/progress-bar'
+import { playModeType } from 'common/js/config'
+
 export default {
   data() {
     return {
@@ -68,8 +70,14 @@ export default {
     iconTogglePlay() {
       return !this.playing ? 'icon-play' : 'icon-pause'
     },
-    iconMode() {
-      return 'icon-loop'
+    iconPlayMode() {
+      if (this.playMode === 0){
+        return 'icon-sequence'
+      } else if (this.playMode === 1) {
+        return 'icon-loop'
+      } else if (this.playMode === 2) {
+        return 'icon-random'
+      }
     },
     currentAudioTimeX() {
       return this.playing ? this.formatSongTime(this.currentAudioTime) : '00:00'
@@ -116,7 +124,8 @@ export default {
       }
     },
     changePlayMode() {
-      this.setPlayMode(1)
+      let mode = (this.playMode + 1) % 3
+      this.setPlayMode(mode)
       console.log(this.playMode)
     },
     audioTime(e) {
@@ -167,6 +176,7 @@ export default {
       })
     },
     currentAudioTime(newTime) {
+      //  当前播放进度的比例
       this.progressNum = newTime / this.currentSong.duration * 100 | 0
     }
   },
@@ -260,12 +270,13 @@ export default {
         border-radius:50%
     .mini-player-title
       margin:10px
+      width:100%
       .mini-songName
         color:$color-text
         white-space: nowrap
         text-overflow:ellipsis
         overflow:hidden
-        width:70%
+        width:65%
       .mini-singerName
         margin-top:10px
         color:$color-text-l

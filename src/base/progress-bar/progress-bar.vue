@@ -8,12 +8,19 @@
   </div>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   props: {
     progressNum: {
       type: Number,
-      default: 0
+      default: -1
     }
+  },
+  computed: {
+    ...mapGetters([
+        'playing',
+        'playList'
+      ])
   },
   methods:{
     moveProgress(e) {
@@ -22,12 +29,14 @@ export default {
     }
   },
   watch: {
-    progressNum(newNum) {
+    playList(){
       //  改变dom会导致状态栏失效
       if (!this.barWidth) {
         this.barWidth = this.$refs.bar.clientWidth
         console.log('进度栏' + this.barWidth)
       }
+    },
+    progressNum(newNum) {
       let lightWidth = newNum / 100 * this.barWidth
       this.$refs.light.style.width = `${lightWidth}px`
       this.$refs.ball.style['transform'] = `translate3d(${lightWidth}px,0,0)`
