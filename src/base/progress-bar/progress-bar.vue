@@ -62,9 +62,10 @@ export default {
       .ball
         position: relative
         box-sizing: border-box
-        top:-7px
-        width:20px
-        height:20px
+        top:-5px
+        left:-10px
+        width:15px
+        height:15px
         border-radius:50%
         background:$color-theme
 </style>

@@ -58,6 +58,7 @@
 import { mapGetters, mapMutations } from 'vuex'
 import progressBar from 'base/progress-bar/progress-bar'
 import { playModeType } from 'common/js/config'
+import { randomList } from 'common/js/util'
 
 export default {
   data() {
@@ -88,6 +89,7 @@ export default {
     ...mapGetters([
       'playing',
       'playList',
+      'sequenceList',
       'fullScreen',
       'currentIndex',
       'currentSong',
@@ -126,7 +128,6 @@ export default {
     changePlayMode() {
       let mode = (this.playMode + 1) % 3
       this.setPlayMode(mode)
-      console.log(this.playMode)
     },
     audioTime(e) {
       this.currentAudioTime = e.target.currentTime
@@ -154,6 +155,7 @@ export default {
     ...mapMutations({
       setFullScreen: 'SET_FULL_SCREEN',
       setPlaying: 'SET_PLAYING',
+      setPlayList: 'SET_PLAY_LIST',
       setCurrentIndex: 'SET_CURRENT_INDEX',
       setPlayMode: 'SET_PLAY_MODE'
     })
@@ -178,6 +180,15 @@ export default {
     currentAudioTime(newTime) {
       //  当前播放进度的比例
       this.progressNum = newTime / this.currentSong.duration * 100 | 0
+    },
+    playMode(newMode) {
+      if (newMode === 0) {
+        this.setPlayList(this.sequenceList)
+      } else if (newMode === 1) {
+        this.setPlayList(randomList(this.sequenceList))
+      } else if (newMode === 2) {
+        console.log(newMode)
+      }
     }
   },
   components: {
@@ -232,9 +243,11 @@ export default {
       display:flex
       justify-content:center
       .progress
-        width:65%
+        width:60%
+      .timeLeft
+        margin-right:10px
       .timeRight
-        margin-left:5px
+        margin-left:15px
     .player-panel
       display:flex
       position:fixed
@@ -281,6 +294,10 @@ export default {
         margin-top:10px
         color:$color-text-l
         font-size:13px
+        white-space: nowrap
+        text-overflow:ellipsis
+        overflow:hidden
+        width:65%
     .TongglePlay
       font-size:35px
       position:fixed
