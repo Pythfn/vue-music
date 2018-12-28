@@ -47,16 +47,23 @@
         <div class="mini-songName">{{ currentSong.name }}</div>
         <div class="mini-singerName">{{ currentSong.singer }}</div>
       </div>
-      <div class="icon TongglePlay" @click.stop="togglePlay">
-        <i :class="iconTogglePlay"></i>
+      <div class="mini-player-panel">
+        <div class="icon TongglePlay" @click.stop="togglePlay">
+          <i :class="iconTogglePlay"></i>
+        </div>
+        <div class="mini-playList" @click.stop="showPlayList">
+          <i class="icon-playlist"></i>
+        </div>
       </div>
     </div>
+    <play-list v-show="isShowplayList"></play-list>
     <audio ref="audio" :src="currentSong.url" @timeupdate="audioTime" @ended="onEnded"></audio>
   </div>
 </template>
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import progressBar from 'base/progress-bar/progress-bar'
+import playList from 'components/play-list/play-list'
 import { playModeType } from 'common/js/config'
 import { randomList } from 'common/js/util'
 
@@ -64,7 +71,8 @@ export default {
   data() {
     return {
       currentAudioTime: '',
-      progressNum: 0
+      progressNum: 0,
+      isShowplayList: false
     }
   },
   computed: {
@@ -72,11 +80,11 @@ export default {
       return !this.playing ? 'icon-play' : 'icon-pause'
     },
     iconPlayMode() {
-      if (this.playMode === 0){
+      if (this.playMode === playModeType.sequence){
         return 'icon-sequence'
-      } else if (this.playMode === 1) {
+      } else if (this.playMode === playModeType.loop) {
         return 'icon-loop'
-      } else if (this.playMode === 2) {
+      } else if (this.playMode === playModeType.random) {
         return 'icon-random'
       }
     },
@@ -129,6 +137,9 @@ export default {
       let mode = (this.playMode + 1) % 3
       this.setPlayMode(mode)
     },
+    showPlayList() {
+      this.isShowplayList = !this.isShowplayList
+    },
     audioTime(e) {
       this.currentAudioTime = e.target.currentTime
     },
@@ -150,6 +161,10 @@ export default {
       this.$refs.audio.currentTime = time
     },
     onEnded() {
+      if (this.playMode === playModeType.loop) {
+        this.$refs.audio.play()
+        return
+      }
       this.nextPlay()
     },
     ...mapMutations({
@@ -182,17 +197,19 @@ export default {
       this.progressNum = newTime / this.currentSong.duration * 100 | 0
     },
     playMode(newMode) {
-      if (newMode === 0) {
+      if (newMode === playModeType.sequence) {
+        console.log('sequence')
         this.setPlayList(this.sequenceList)
-      } else if (newMode === 1) {
-        this.setPlayList(randomList(this.sequenceList))
-      } else if (newMode === 2) {
+      } else if (newMode === playModeType.loop) {
         console.log(newMode)
+      } else if (newMode === playModeType.random) {
+        this.setPlayList(randomList(this.sequenceList))
       }
     }
   },
   components: {
-    progressBar
+    progressBar,
+    playList
   }
 }
 
@@ -298,10 +315,17 @@ export default {
         text-overflow:ellipsis
         overflow:hidden
         width:65%
-    .TongglePlay
-      font-size:35px
-      position:fixed
-      margin-top:10px
-      right:60px
-      color:$color-theme
+    .mini-player-panel
+      .TongglePlay
+        font-size:35px
+        position:fixed
+        margin-top:10px
+        right:60px
+        color:$color-theme
+      .mini-playList
+        position:fixed
+        font-size:25px
+        color:$color-theme
+        margin-top:15px
+        right:15px
 </style>

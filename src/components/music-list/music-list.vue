@@ -19,7 +19,7 @@
        v-show="data.length"
        ref="playAllSongs"
       >
-        <div class="playBtn">
+        <div class="playBtn" @click="playForRandom">
           <i class="icon-play"></i>
           <span>随机播放全部</span>
         </div>
@@ -51,6 +51,7 @@
 import SongList from 'base/song-list/song-list'
 import { mapActions } from 'vuex'
 import Scroll from 'base/scroll/scroll'
+import { randomList } from 'common/js/util'
 
 const SINGER_TITLE_HEIGHT = 40
 export default {
@@ -93,6 +94,12 @@ export default {
         index
       })
       console.log(this.$store.state.playing)
+    },
+    playForRandom() {
+      this.startPlay({
+        data: randomList(this.songList),
+        index: 0
+      })
     },
     ...mapActions([
       'startPlay'
