@@ -8,9 +8,11 @@
       </div>
     </li>
   </ul>
+  <loading v-show="!songs.length" class="loading"></loading>
 </div>
 </template>
 <script>
+import Loading from 'base/loading/loading'
 export default {
   props: {
     songs: Array
@@ -22,6 +24,9 @@ export default {
     select(item, index) {
       this.$emit('select', item, index)
     }
+  },
+  components: {
+    Loading
   }
 }
 </script>
@@ -36,4 +41,7 @@ export default {
     p
       line-height:30px
       color: $color-text-d
+.loading
+  width:100%
+  height:100%
 </style>

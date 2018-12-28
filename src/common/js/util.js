@@ -7,7 +7,7 @@ export function randomList(arr) {
   let arrlen = arrc.length
   for (let i = 0; i < arrlen; i++) {
     let rNum = randomNum(arrlen)
-    let t = arrc[i];
+    let t = arrc[i]
     arrc[i] = arrc[rNum]
     arrc[rNum] = t
   }

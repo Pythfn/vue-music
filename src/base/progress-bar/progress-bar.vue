@@ -1,8 +1,18 @@
 <template>
   <div class="progress-bar">
-    <div class="bar" ref="bar"  @click="moveProgress">
-      <div class="light" ref="light">
-        <div class="ball" ref="ball"></div>
+    <div
+     class="bar"
+     ref="bar"
+     @click="moveProgress"
+    >
+      <div
+       class="light"
+       ref="light"
+      >
+        <div
+         class="ball"
+         ref="ball"
+        ></div>
       </div>
     </div>
   </div>
@@ -18,18 +28,18 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'playing',
-        'playList'
-      ])
+      'playing',
+      'playList'
+    ])
   },
-  methods:{
+  methods: {
     moveProgress(e) {
       let p = e.offsetX / this.barWidth
       this.$emit('moveprogress', p)
     }
   },
   watch: {
-    playList(){
+    playList() {
       //  改变dom会导致状态栏失效
       if (!this.barWidth) {
         this.barWidth = this.$refs.bar.clientWidth
@@ -44,7 +54,6 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" scoped>
 @import '~common/stylus/variable.styl'
 .progress-bar

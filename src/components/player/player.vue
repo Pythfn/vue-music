@@ -80,7 +80,7 @@ export default {
       return !this.playing ? 'icon-play' : 'icon-pause'
     },
     iconPlayMode() {
-      if (this.playMode === playModeType.sequence){
+      if (this.playMode === playModeType.sequence) {
         return 'icon-sequence'
       } else if (this.playMode === playModeType.loop) {
         return 'icon-loop'

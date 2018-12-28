@@ -1,7 +1,10 @@
 <template>
   <div class="play-list">
     <ul>
-      <li v-for="item in playList">{{ item.name }}</li>
+      <li
+       v-for="item in playList"
+       :key="item.id"
+      >{{ item.name }}</li>
     </ul>
   </div>
 </template>
@@ -14,7 +17,9 @@ export default {
     ])
   }
 }
+
 </script>
+
 <style lang="stylus" scoped>
 @import '~common/stylus/variable.styl'
 .play-list
