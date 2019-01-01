@@ -16,7 +16,7 @@
         </div>
         <div>
           <ul class="recommend-list">
-            <li v-for="item in discList" :key="item.dissid" class="item">
+            <li v-for="item in discList" :key="item.dissid" class="item" @click="selectDisc(item.dissid)">
               <div class="img">
                 <img v-lazy="item.imgurl" class="list-item-img">
               </div>
@@ -30,6 +30,7 @@
       </div>
     </scroll>
     <loading v-show="!discList.length"></loading>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -73,7 +74,7 @@ export default {
       getDiscList().then((res) => {
         if (res.code === 0) {
           this.discList = res.data.list
-          //  console.log(this.discList)
+          console.log(this.discList)
         }
       })
     },
@@ -82,6 +83,9 @@ export default {
         this.$refs.scroll.refresh()
         this.isLoaded = true
       }
+    },
+    selectDisc(dissid) {
+      this.$router.push(`/recommend/${dissid}`)
     }
   }
 }
