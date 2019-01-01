@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <play-list v-show="isShowplayList"></play-list>
+    <play-list v-if="isShowplayList"></play-list>
     <audio ref="audio" :src="currentSong.url" @timeupdate="audioTime" @ended="onEnded"></audio>
   </div>
 </template>
