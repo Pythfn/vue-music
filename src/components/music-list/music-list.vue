@@ -52,9 +52,11 @@ import SongList from 'base/song-list/song-list'
 import { mapActions } from 'vuex'
 import Scroll from 'base/scroll/scroll'
 import { randomList } from 'common/js/util'
+import { playerMixin } from 'common/js/mixin'
 
 const SINGER_TITLE_HEIGHT = 40
 export default {
+  mixins: [playerMixin],
   props: {
     data: {
       type: Array
@@ -82,6 +84,11 @@ export default {
     }
   },
   methods: {
+    setPlayerHeightMixin(playList) {
+      let height = playList.length ? this.PLAYER_HEIGHT : ''
+      this.$refs.songScroll.$el.style.bottom = height
+      this.$refs.songScroll.refresh()
+    },
     goback() {
       this.$router.back()
     },

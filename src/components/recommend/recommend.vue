@@ -37,7 +37,9 @@ import { getRecommend, getDiscList } from 'api/recommend'
 import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
+import { playerMixin } from 'common/js/mixin'
 export default {
+  mixins: [playerMixin],
   data () {
     return {
       recommends: [],
@@ -54,6 +56,11 @@ export default {
     this._getDiscList()
   },
   methods: {
+    setPlayerHeightMixin(playList) {
+      let height = playList.length ? this.PLAYER_HEIGHT : ''
+      this.$refs.scroll.$el.style.bottom = height
+      this.$refs.scroll.refresh()
+    },
     _getRecommend () {
       getRecommend().then((res) => {
         if (res.code === 0) {
@@ -66,7 +73,7 @@ export default {
       getDiscList().then((res) => {
         if (res.code === 0) {
           this.discList = res.data.list
-          console.log(this.discList)
+          //  console.log(this.discList)
         }
       })
     },

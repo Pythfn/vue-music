@@ -93,6 +93,9 @@ export default {
     },
     select(item) {
       this.$emit('select', item)
+    },
+    refresh() {
+      this.$refs.scroll.refresh()
     }
   },
   watch: {
@@ -115,8 +118,8 @@ export default {
   width: 100%
   .bscroll
     position: absolute
-    top:88px
-    bottom: 0
+    bottom:0
+    top:0
     width:100%
     overflow: hidden
     .list-title
@@ -143,7 +146,7 @@ export default {
     padding:4px
     padding-top:20px
     padding-bottom:20px
-    top:100px
+    top:12px
     right: 0
     text-align:center
     opacity:0.5
@@ -156,7 +159,6 @@ export default {
   .grouptitle
     position:absolute
     background:black
-    top:88px
     left:0
     right:0
     padding:8px 0

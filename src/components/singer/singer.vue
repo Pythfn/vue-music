@@ -1,6 +1,6 @@
 <template>
-  <div class="singer">
-    <listview :list="singerList" @select="selectSinger"></listview>
+  <div class="singer" ref="singer">
+    <listview :list="singerList" @select="selectSinger" ref="singerList"></listview>
     <loading v-show="!singerList.length"></loading>
   <router-view></router-view>
   </div>
@@ -11,7 +11,10 @@ import Singer from 'common/js/singer.js'
 import listview from 'base/listview/listview'
 import loading from 'base/loading/loading'
 import { mapMutations } from 'vuex'
+import { playerMixin } from 'common/js/mixin'
+
 export default {
+  mixins: [playerMixin],
   data() {
     return {
       singerList: [],
@@ -24,6 +27,11 @@ export default {
     loading
   },
   methods: {
+    setPlayerHeightMixin(playList) {
+      let height = playList.length ? this.PLAYER_HEIGHT : ''
+      this.$refs.singer.style.bottom = height
+      this.$refs.singerList.refresh()
+    },
     _getSingerList() {
       getSingerList().then((res) => {
         if (res.code === 0) {
@@ -97,5 +105,10 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+.singer
+  position:fixed
+  bottom:0
+  left:0
+  right:0
+  top:88px
 </style>
