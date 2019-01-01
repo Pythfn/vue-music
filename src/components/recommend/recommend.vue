@@ -39,6 +39,7 @@ import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import { playerMixin } from 'common/js/mixin'
+import { mapMutations } from 'vuex'
 export default {
   mixins: [playerMixin],
   data () {
@@ -86,7 +87,11 @@ export default {
     },
     selectDisc(dissid) {
       this.$router.push(`/recommend/${dissid}`)
-    }
+      this.setDiscid(dissid)
+    },
+    ...mapMutations({
+      setDiscid: 'SET_DISCID'
+    })
   }
 }
 

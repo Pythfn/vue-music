@@ -16,3 +16,5 @@ export const currentIndex = state => state.currentIndex
 export const currentSong = (state) => {
   return state.playList[state.currentIndex] || {}
 }
+//  首页的歌单ID
+export const discId = state => state.discId

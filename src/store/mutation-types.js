@@ -13,3 +13,5 @@ export const SET_PLAY_MODE = 'SET_PLAY_MODE'
 export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 //  当前播放歌曲
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG'
+
+export const SET_DISCID = 'SET_DISCID'
