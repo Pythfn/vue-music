@@ -4,6 +4,7 @@ import Recommend from 'components/recommend/recommend'
 import Singer from 'components/singer/singer'
 import Disc from 'components/disc/disc'
 import Rank from 'components/rank/rank'
+import TopList from 'components/top-list/top-list'
 
 const SingerDetail = (resolve) => {
   import('components/singer-detail/singer-detail').then((module) => {
@@ -41,7 +42,13 @@ export default new Router({
     },
     {
       path: '/rank',
-      component: Rank
+      component: Rank,
+      children: [
+        {
+          path: ':id',
+          component: TopList
+        }
+      ]
     }
   ]
 })

@@ -2,7 +2,7 @@
   <div class="rank">
     <scroll :data="rankList" class="rankScroll">
       <div class="rankList">
-        <div v-for="item in rankList" class="rankItem" :key="item.id">
+        <div v-for="item in rankList" class="rankItem" :key="item.id" @click="selectRankItem(item)">
           <div class="rankImg">
             <img v-lazy="item.picUrl">
           </div>
@@ -15,11 +15,13 @@
           </div>
         </div>
     </scroll>
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import { getTopList } from 'api/rank'
 import Scroll from 'base/scroll/scroll'
+import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -33,9 +35,16 @@ export default {
     _getTopList() {
       getTopList().then((res) => {
         this.rankList = res.data.topList
-        //  console.log(this.rankList)
+        console.log(res.data)
       })
-    }
+    },
+    selectRankItem(item) {
+      this.$router.push(`/rank/${item.id}`)
+      this.setTopId(item)
+    },
+    ...mapMutations({
+      'setTopId': 'SET_TOPID'
+    })
   },
   created() {
     this._getTopList()

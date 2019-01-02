@@ -18,3 +18,5 @@ export const currentSong = (state) => {
 }
 //  首页的歌单ID
 export const discId = state => state.discId
+//  排行ID
+export const topId = state => state.topId

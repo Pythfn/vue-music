@@ -15,3 +15,5 @@ export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX'
 export const SET_CURRENT_SONG = 'SET_CURRENT_SONG'
 
 export const SET_DISCID = 'SET_DISCID'
+
+export const SET_TOPID = 'SET_TOPID'
