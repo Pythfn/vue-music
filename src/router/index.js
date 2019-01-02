@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Recommend from 'components/recommend/recommend'
 import Singer from 'components/singer/singer'
 import Disc from 'components/disc/disc'
+import Rank from 'components/rank/rank'
 
 const SingerDetail = (resolve) => {
   import('components/singer-detail/singer-detail').then((module) => {
@@ -37,6 +38,10 @@ export default new Router({
           component: SingerDetail
         }
       ]
+    },
+    {
+      path: '/rank',
+      component: Rank
     }
   ]
 })
