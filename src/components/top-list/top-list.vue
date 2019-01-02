@@ -8,7 +8,6 @@ import musicList from 'components/music-list/music-list'
 import { mapGetters } from 'vuex'
 import { getMusicList } from 'api/rank'
 import { createSong, getSongVkey } from 'common/js/song'
-
 export default {
   data() {
     return {

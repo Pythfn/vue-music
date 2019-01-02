@@ -1,6 +1,6 @@
 <template>
   <div class="rank">
-    <scroll :data="rankList" class="rankScroll">
+    <scroll :data="rankList" class="rankScroll" ref="scroll">
       <div class="rankList">
         <div v-for="item in rankList" class="rankItem" :key="item.id" @click="selectRankItem(item)">
           <div class="rankImg">
@@ -21,8 +21,11 @@
 <script>
 import { getTopList } from 'api/rank'
 import Scroll from 'base/scroll/scroll'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
+import { playerMixin } from 'common/js/mixin'
+
 export default {
+  mixins: [playerMixin],
   data() {
     return {
       rankList: []
@@ -32,6 +35,11 @@ export default {
     Scroll
   },
   methods: {
+    setPlayerHeightMixin(playList) {
+      let height = playList.length ? this.PLAYER_HEIGHT : ''
+      this.$refs.scroll.$el.style.bottom = height
+      console.log(height)
+    },
     _getTopList() {
       getTopList().then((res) => {
         this.rankList = res.data.topList
