@@ -7,7 +7,7 @@ const state = {
   sequenceList: [],
   playMode: playModeType.sequence,
   currentIndex: -1,
-  discId: ''
+  discId: {}
 }
 
 export default state

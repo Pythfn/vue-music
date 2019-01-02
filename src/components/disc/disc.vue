@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <music-list :data="data" :songList="songList" :title="singerName" :singerBg="singerBg"></music-list>
+    <music-list :data="data" :songList="songList" :title="discName" :singerBg="singerBg"></music-list>
   </transition>
 </template>
 <script>
@@ -21,8 +21,8 @@ export default {
     musicList
   },
   computed: {
-    singerName() {
-      return this.discId.name
+    discName() {
+      return this.discId.dissname
     },
     ...mapGetters([
       'discId'
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     _getDiscSongList() {
-      getDiscSongList(this.discId).then((res) => {
+      getDiscSongList(this.discId.dissid).then((res) => {
         //  解析jsoncallback方法为json对象
         let temp = res.substring(12)
         let json = eval('(' + temp + ')')
