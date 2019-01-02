@@ -16,7 +16,7 @@
         </div>
         <div>
           <ul class="recommend-list">
-            <li v-for="item in discList" :key="item.dissid" class="item" @click="selectDisc(item.dissid)">
+            <li v-for="item in discList" :key="item.dissid" class="item" @click="selectDisc(item)">
               <div class="img">
                 <img v-lazy="item.imgurl" class="list-item-img">
               </div>
@@ -85,9 +85,9 @@ export default {
         this.isLoaded = true
       }
     },
-    selectDisc(dissid) {
-      this.$router.push(`/recommend/${dissid}`)
-      this.setDiscid(dissid)
+    selectDisc(item) {
+      this.$router.push(`/recommend/${item.dissid}`)
+      this.setDiscid(item)
     },
     ...mapMutations({
       setDiscid: 'SET_DISCID'
