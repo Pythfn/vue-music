@@ -46,8 +46,7 @@ export function getDiscSongList(disstid) {
     hostUin: 0,
     needNewCode: 0
   })
-
-  return axios.get(url, { params: data }).then((res)=> {
+  return axios.get(url, { params: data }).then((res) => {
     return Promise.resolve(res.data)
   })
 }

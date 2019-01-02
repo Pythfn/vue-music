@@ -1,11 +1,6 @@
 <template>
   <transition name="slide">
-    <music-list
-     :data="data"
-     :songList="songList"
-     :title="singerName"
-     :singerBg="singerBg"
-    ></music-list>
+    <music-list :data="data" :songList="songList" :title="singerName" :singerBg="singerBg"></music-list>
   </transition>
 </template>
 <script>
@@ -18,17 +13,15 @@ export default {
   data() {
     return {
       data: [],
-      songList: []
+      songList: [],
+      singerBg: ''
     }
   },
   components: {
     musicList
   },
   computed: {
-    singerBg() {
-      return this.discId.img
-    },
-    singerName () {
+    singerName() {
       return this.discId.name
     },
     ...mapGetters([
@@ -37,23 +30,35 @@ export default {
   },
   methods: {
     _getDiscSongList() {
-      getDiscSongList(this.discId).then((json) => {
-        if(1){
-          console.log(json)
+      getDiscSongList(this.discId).then((res) => {
+        //  解析jsoncallback方法为json对象
+        let temp = res.substring(12)
+        let json = eval('(' + temp + ')')
+        if (json.code === 0) {
+          this.singerBg = json.cdlist[0].logo
+          this.data = json.cdlist[0].songlist
+          //  console.log(this.data)
+          this.data.forEach((item) => {
+            let { songmid } = item
+            getSongVkey(songmid).then((res) => {
+              // console.log('这首歌的vkey获取到了')
+              const vkey = res.data.items[0].vkey
+              this.songList.push(createSong(item, vkey))
+            })
+          })
+          //  console.log(this.songList)
         }
       })
     }
   },
-  created () {
+  created() {
     if (!this.discId) {
       this.$router.push('/recommend')
     }
     this._getDiscSongList()
   }
 }
-
 </script>
-
 <style lang="stylus" scoped>
 .slide-enter-active, .slide-leave-active
   transition: all 0.2s
