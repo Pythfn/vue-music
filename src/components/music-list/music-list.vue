@@ -42,7 +42,7 @@
      ref="songScroll"
     >
       <div class="songList">
-        <song-list :songs="songList" @select="selectSong"></song-list>
+        <song-list :songs="songList" @select="selectSong" :indexIcon="songListIndex"></song-list>
       </div>
     </scroll>
   </div>
@@ -71,6 +71,10 @@ export default {
     singerBg: {
       type: String,
       default: ''
+    },
+    songListIndex: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
