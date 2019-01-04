@@ -1,6 +1,7 @@
 <template>
   <div class="search">
     <search-box :newQuery="newQuery"></search-box>
+    <result></result>
     <div class="hotKeyBox">
       <ul>
         <div class="hotKeyTitle">
@@ -15,6 +16,7 @@
 </template>
 <script>
 import SearchBox from 'base/search-box/search-box'
+import Result from 'components/result/result'
 import { getHotKey } from 'api/search'
 export default {
   data() {
@@ -24,7 +26,8 @@ export default {
     }
   },
   components: {
-    SearchBox
+    SearchBox,
+    Result
   },
   created() {
     this._getHotKey()
