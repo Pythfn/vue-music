@@ -5,6 +5,7 @@ import Singer from 'components/singer/singer'
 import Disc from 'components/disc/disc'
 import Rank from 'components/rank/rank'
 import TopList from 'components/top-list/top-list'
+import Search from 'components/search/search'
 
 const SingerDetail = (resolve) => {
   import('components/singer-detail/singer-detail').then((module) => {
@@ -49,6 +50,10 @@ export default new Router({
           component: TopList
         }
       ]
+    },
+    {
+      path: '/search',
+      component: Search
     }
   ]
 })
