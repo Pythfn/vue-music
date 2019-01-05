@@ -23,6 +23,10 @@ export default {
     listenScroll: {
       type: Boolean,
       default: false
+    },
+    endEmit: {
+      type: Boolean,
+      default: false
     }
   },
   mounted() {
@@ -43,6 +47,13 @@ export default {
         const self = this
         this.scroll.on('scroll', (p) => {
           self.$emit('scroll', p)
+        })
+      }
+      if (this.endEmit) {
+        this.scroll.on('scrollEnd', () => {
+          if (this.scroll.y <= (this.scroll.maxScrollY + 40)) {
+            this.$emit('isScrollEnd')
+          }
         })
       }
     },

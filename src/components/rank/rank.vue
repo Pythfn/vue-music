@@ -21,7 +21,7 @@
 <script>
 import { getTopList } from 'api/rank'
 import Scroll from 'base/scroll/scroll'
-import { mapMutations, mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import { playerMixin } from 'common/js/mixin'
 
 export default {

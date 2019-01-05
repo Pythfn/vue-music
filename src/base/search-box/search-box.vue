@@ -12,7 +12,7 @@ export default {
       type: String,
       default: '搜索歌曲、歌手'
     },
-    newQuery: String
+    hotQuery: String
   },
   data() {
     return {
@@ -25,8 +25,12 @@ export default {
     }
   },
   watch: {
-    newQuery(newQ) {
+    hotQuery(newQ) {
       this.query = newQ
+    },
+    //  ??????教程
+    query(newQuery) {
+      this.$emit('query', newQuery)
     }
   }
 }

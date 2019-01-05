@@ -1,13 +1,18 @@
 <template>
   <div class="search">
-    <search-box :newQuery="newQuery"></search-box>
-    <result></result>
+    <search-box :hotQuery="hotQuery" @query="queryChanged"></search-box>
+    <result :query="query" v-show="query.length"></result>
     <div class="hotKeyBox">
       <ul>
         <div class="hotKeyTitle">
           <span>热门搜索</span>
         </div>
-        <li v-for="hk in hotKeyList" :key="hk.n" class="hotKeyItem" @click="setQuery(hk.k)">
+        <li
+         v-for="hk in hotKeyList"
+         :key="hk.n"
+         class="hotKeyItem"
+         @click="setHotQuery(hk.k)"
+        >
           {{ hk.k }}
         </li>
       </ul>
@@ -22,7 +27,8 @@ export default {
   data() {
     return {
       hotKeyList: [],
-      newQuery:''
+      hotQuery: '',
+      query: ''
     }
   },
   components: {
@@ -38,11 +44,15 @@ export default {
         this.hotKeyList = res.data.hotkey.slice(0, 10)
       })
     },
-    setQuery(newItem) {
-      this.newQuery = newItem
+    setHotQuery(newItem) {
+      this.hotQuery = newItem
+    },
+    queryChanged(newQ) {
+      this.query = newQ
     }
   }
 }
+
 </script>
 <style lang="stylus">
 @import '~common/stylus/variable.styl'
