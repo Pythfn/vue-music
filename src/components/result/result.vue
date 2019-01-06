@@ -16,6 +16,10 @@
               <i :class="resultType(item)"></i>
               <span v-html="getResultItem(item)"></span>
             </li>
+            <loading
+             v-show="loadingNext"
+             class="loading"
+            ></loading>
           </ul>
         </div>
       </scroll>
@@ -25,8 +29,9 @@
 <script>
 import { search } from 'api/search'
 import { createSong, getSongVkey } from 'common/js/song'
-import Singer from 'common/js/singer'
 import Scroll from 'base/scroll/scroll'
+import loading from 'base/loading/loading'
+
 //  一次请求多少条目
 const PERPAGE = 20
 const TYPE_SINGER = 'singer'
@@ -47,7 +52,9 @@ export default {
       page: 1,
       resultList: [],
       resultLists: [],
-      resultEnd: false
+      copyresultLists: [],
+      nextPage: true,
+      loadingNext: false
     }
   },
   methods: {
@@ -70,20 +77,45 @@ export default {
         search(this.query, this.page, this.showSinger, PERPAGE).then((res) => {
           if (res.code === 0) {
             let tempList = res.data.song.list
-            this.getResultList(res.data)
+            this._getResultList(res.data).then((res) => {
+              this.resultList = res
+            })
           }
-          console.log(this.page)
+          console.log('result-page：' + this.page)
         })
       }
     },
-    getResultList(data) {
+    searchMore() {
+      if (this.nextPage) {
+        this.loadingNext = true
+        search(this.query, this.page, this.showSinger, PERPAGE).then((res) => {
+          if (res.code === 0) {
+            let tempList = res.data.song.list
+            this._getResultList(res.data).then((res) => {
+              this.resultList = Object.assign(res, this.resultList)
+              console.log(this.resultList)
+              this.loadingNext = false
+            })
+          }
+        })
+        console.log('result-page：' + this.page)
+      }
+    },
+    async _getResultList(data) {
+      //  问题：singer和songs不能使用concat合并数组
       let list = []
       let songs = []
-      if (data.zhida && data.zhida.singerid) {
-        list.push({ ...data.zhida, 'type': TYPE_SINGER })
+      if (data.zhida && data.zhida.singerid && this.page === 1) {
+        list.push({ ...data.zhida, ...{ type: TYPE_SINGER } })
         //  singer.push(new Singer(data.zhida.singerid,data.zhida.singername,'singer'))
       }
       let songlist = data.song.list
+      //  检查查询是否到末尾
+      let maxPage = data.song.totalnum / PERPAGE
+      if (this.page >= maxPage) {
+        this.nextPage = false
+      }
+      console.log('maxPage：' + maxPage)
 
       if (songlist) {
         songlist.forEach((item) => {
@@ -95,36 +127,36 @@ export default {
           }
         })
       }
-      setTimeout(()=>{
-        //  list = list.concat(songs)
-        //  this.resultList = list.concat(songs)
-        this.resultList = list.concat(songs)
-        console.log(this.resultList)
-      }, 200)
+      //  数组转换为对象，使用对象合并方法，不能用concat
+      list = Object.assign(songs, list)
+      //  console.log(typeof(list))
+      return list
     },
     isScrollEnd() {
       this.page++
-      this.search()
+      console.log('scrollendddd')
+      this.searchMore()
     }
   },
-  created() {},
   watch: {
     query(newValue, oldValue) {
       if (newValue === oldValue) {
         this.page = 1
+        this.nextPage = true
         this.search()
-        console.log(oldValue)
+        //  console.log(oldValue)
       } else {
         this.resultList = []
         this.page = 1
+        this.nextPage = true
         this.search()
       }
     }
   },
   components: {
-    Scroll
+    Scroll,
+    loading
   }
-
 }
 
 </script>
