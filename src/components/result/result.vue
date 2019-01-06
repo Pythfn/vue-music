@@ -12,6 +12,7 @@
             <li
              v-for="item in resultList"
              class="resultItem"
+             @click="selectItem(item)"
             >
               <i :class="resultType(item)"></i>
               <span v-html="getResultItem(item)"></span>
@@ -29,6 +30,7 @@
 <script>
 import { search } from 'api/search'
 import { createSong, getSongVkey } from 'common/js/song'
+import { mapActions } from 'vuex'
 import Scroll from 'base/scroll/scroll'
 import loading from 'base/loading/loading'
 
@@ -136,7 +138,14 @@ export default {
       this.page++
       console.log('scrollendddd')
       this.searchMore()
-    }
+    },
+    selectItem(item) {
+      console.log(item)
+      this.insterSong(item)
+    },
+    ...mapActions([
+      'insterSong'
+    ])
   },
   watch: {
     query(newValue, oldValue) {
