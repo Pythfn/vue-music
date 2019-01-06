@@ -13,3 +13,16 @@ export function randomList(arr) {
   }
   return arrc
 }
+
+export function fucTimeOut(fuc, time) {
+  let timer
+  //  函数柯里化
+  return function(...args) {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fuc.apply(this, args)
+    }, time)
+  }
+}

@@ -6,13 +6,13 @@
   </div>
 </template>
 <script>
+import { fucTimeOut } from 'common/js/util'
 export default {
   props: {
     placeholder: {
       type: String,
       default: '搜索歌曲、歌手'
-    },
-    hotQuery: String
+    }
   },
   data() {
     return {
@@ -22,36 +22,35 @@ export default {
   methods: {
     cleanQuery() {
       this.query = ''
+    },
+    setHotQuery(newQ) {
+      this.query = newQ
     }
   },
-  watch: {
-    hotQuery(newQ) {
-      this.query = newQ
-    },
-    //  ??????教程
-    query(newQuery) {
+  created() {
+    this.$watch('query', fucTimeOut((newQuery) => {
       this.$emit('query', newQuery)
-    }
+    }, 200))
   }
 }
 </script>
 <style lang="stylus">
 @import '~common/stylus/variable.styl'
 .search-box
-  width:100%
   display:flex
   height:40px
   align-items:center
   padding:0 10px
   box-sizing: border-box
   background:$color-highlight-background
+  margin:10px
   border-radius: 6px
   .input
     background:$color-highlight-background
     width:100%
     padding:0 5px
     margin:0 5px
-    height:30px
+    height:35px
     color:$color-text
     font-size: $font-size-medium
     border-style:none

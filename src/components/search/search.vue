@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <search-box :hotQuery="hotQuery" @query="queryChanged"></search-box>
+    <search-box @query="queryChanged" ref="searchBox"></search-box>
     <result :query="query" v-show="query.length"></result>
     <div class="hotKeyBox">
       <ul>
@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       hotKeyList: [],
-      hotQuery: '',
       query: ''
     }
   },
@@ -44,8 +43,8 @@ export default {
         this.hotKeyList = res.data.hotkey.slice(0, 10)
       })
     },
-    setHotQuery(newItem) {
-      this.hotQuery = newItem
+    setHotQuery(newQ) {
+      this.$refs.searchBox.setHotQuery(newQ)
     },
     queryChanged(newQ) {
       this.query = newQ
