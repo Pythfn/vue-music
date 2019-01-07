@@ -61,7 +61,7 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 import progressBar from 'base/progress-bar/progress-bar'
 import playList from 'components/play-list/play-list'
 import { playModeType } from 'common/js/config'
@@ -173,7 +173,10 @@ export default {
       setPlayList: 'SET_PLAY_LIST',
       setCurrentIndex: 'SET_CURRENT_INDEX',
       setPlayMode: 'SET_PLAY_MODE'
-    })
+    }),
+    ...mapActions([
+      'setRandomPlay'
+      ])
   },
   watch: {
     playing(newPlaying) {
@@ -181,6 +184,7 @@ export default {
       this.$nextTick(() => {
         if (newPlaying) {
           audio.play()
+          console.log(this.playList)
         } else {
           audio.pause()
         }
@@ -203,7 +207,9 @@ export default {
       } else if (newMode === playModeType.loop) {
         console.log(newMode)
       } else if (newMode === playModeType.random) {
-        this.setPlayList(randomList(this.sequenceList))
+        //  this.setPlayList(randomList(this.sequenceList))
+        this.setRandomPlay()
+        console.log('randomNow')
       }
     }
   },

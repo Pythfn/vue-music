@@ -1,26 +1,14 @@
 <template>
   <div class="result">
     <div class="result-list">
-      <scroll
-       class="scroll"
-       :data="resultList"
-       :endEmit="true"
-       @isScrollEnd="isScrollEnd"
-      >
+      <scroll class="scroll" :data="resultList" :endEmit="true" @isScrollEnd="isScrollEnd">
         <div>
           <ul>
-            <li
-             v-for="item in resultList"
-             class="resultItem"
-             @click="selectItem(item)"
-            >
+            <li v-for="item in resultList" class="resultItem" @click="selectItem(item)">
               <i :class="resultType(item)"></i>
               <span v-html="getResultItem(item)"></span>
             </li>
-            <loading
-             v-show="loadingNext"
-             class="loading"
-            ></loading>
+            <loading v-show="loadingNext" class="loading"></loading>
           </ul>
         </div>
       </scroll>
