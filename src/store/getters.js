@@ -20,3 +20,5 @@ export const currentSong = (state) => {
 export const discId = state => state.discId
 //  排行ID
 export const topId = state => state.topId
+//  搜索历史
+export const searchHistory = state => state.searchHistory

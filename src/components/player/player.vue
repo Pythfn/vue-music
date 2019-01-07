@@ -65,7 +65,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex'
 import progressBar from 'base/progress-bar/progress-bar'
 import playList from 'components/play-list/play-list'
 import { playModeType } from 'common/js/config'
-import { randomList } from 'common/js/util'
 
 export default {
   data() {
@@ -176,7 +175,7 @@ export default {
     }),
     ...mapActions([
       'setRandomPlay'
-      ])
+    ])
   },
   watch: {
     playing(newPlaying) {

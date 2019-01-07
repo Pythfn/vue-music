@@ -1,5 +1,6 @@
 import * as types from './mutation-types'
 import { randomList } from 'common/js/util'
+import { saveSearch } from 'common/js/storage'
 
 //  解构赋值出action的commit 和 state方法
 export const startPlay = function({ commit, state }, { data, index }) {
@@ -12,17 +13,14 @@ export const startPlay = function({ commit, state }, { data, index }) {
 
 export const setRandomPlay = function({ commit, state }) {
   let playList = state.playList.slice()
-  let sequenceList = state.sequenceList.slice()
-  let playing = state.playing
   let currentIndex = state.currentIndex
   let currentSong = playList[currentIndex]
   playList = randomList(playList)
   let newIndex = findSongIndex(playList, currentSong)
   commit(types.SET_PLAY_LIST, playList)
   commit(types.SET_CURRENT_INDEX, newIndex)
-  console.log('suijiwancheng')
+  console.log('成功随机排序PlayList！')
 }
-
 
 const findSongIndex = function(arr, song) {
   let index = arr.findIndex((value) => {
@@ -35,7 +33,6 @@ export const insterSong = function({ commit, state }, song) {
   //  深拷贝防止对state进行操作
   let playList = state.playList.slice()
   let sequenceList = state.sequenceList.slice()
-  let playing = state.playing
   let currentIndex = state.currentIndex
   let currentSong = playList[currentIndex]
   let newIndex = 0
@@ -67,4 +64,10 @@ export const insterSong = function({ commit, state }, song) {
   commit(types.SET_FULL_SCREEN, true)
   console.log(playList)
   console.log(sequenceList)
+}
+
+
+export const saveSearchHistory = function({commit}, query) {
+  commit(type.SET_SEARCH_HISTORY, saveSearch(query))
+  console.log('saveSearchdone')
 }

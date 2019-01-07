@@ -17,11 +17,22 @@
         </li>
       </ul>
     </div>
+    <div class="searchHistory">
+      <div class="title">
+        <span class="text">搜索历史</span>
+        <span class="clear">
+          <i class="icon-clear"></i>
+        </span>
+      </div>
+      <search-list :searchlist="searchHistory"></search-list>
+    </div>
   </div>
 </template>
 <script>
 import SearchBox from 'base/search-box/search-box'
 import Result from 'components/result/result'
+import searchList from 'base/search-list/search-list'
+import { mapActions, mapGetters } from 'vuex'
 import { getHotKey } from 'api/search'
 export default {
   data() {
@@ -32,10 +43,17 @@ export default {
   },
   components: {
     SearchBox,
-    Result
+    Result,
+    searchList
+  },
+  computed: {
+    ...mapGetters([
+      'searchHistory'
+    ])
   },
   created() {
     this._getHotKey()
+    this.saveSearchHistory('ssss')
   },
   methods: {
     _getHotKey() {
@@ -48,7 +66,10 @@ export default {
     },
     queryChanged(newQ) {
       this.query = newQ
-    }
+    },
+    ...mapActions([
+      'saveSearchHistory'
+    ])
   }
 }
 
@@ -72,4 +93,12 @@ export default {
       background:$color-highlight-background
       margin:0 20px 10px 0px
       font-size:$font-size-medium
+  .searchHistory
+    .title
+      display:flex
+      margin:20px
+      color:$color-text-l
+      .text
+        flex:1
+      
 </style>

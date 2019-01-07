@@ -4,7 +4,7 @@
       <scroll class="scroll" :data="resultList" :endEmit="true" @isScrollEnd="isScrollEnd">
         <div>
           <ul>
-            <li v-for="item in resultList" class="resultItem" @click="selectItem(item)">
+            <li v-for="(item, index) in resultList" class="resultItem" @click="selectItem(item)" :key="index">
               <i :class="resultType(item)"></i>
               <span v-html="getResultItem(item)"></span>
             </li>
@@ -66,7 +66,6 @@ export default {
       if (this.query.length && !this.resultEnd) {
         search(this.query, this.page, this.showSinger, PERPAGE).then((res) => {
           if (res.code === 0) {
-            let tempList = res.data.song.list
             this._getResultList(res.data).then((res) => {
               this.resultList = res
             })
@@ -80,7 +79,6 @@ export default {
         this.loadingNext = true
         search(this.query, this.page, this.showSinger, PERPAGE).then((res) => {
           if (res.code === 0) {
-            let tempList = res.data.song.list
             this._getResultList(res.data).then((res) => {
               this.resultList = Object.assign(res, this.resultList)
               console.log(this.resultList)
@@ -119,7 +117,6 @@ export default {
       }
       //  数组转换为对象，使用对象合并方法，不能用concat
       list = Object.assign(songs, list)
-      //  console.log(typeof(list))
       return list
     },
     isScrollEnd() {
