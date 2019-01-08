@@ -36,6 +36,7 @@ export default {
 }
 </script>
 <style lang="stylus">
+@import '~common/stylus/variable.styl'
 .tabs
   display:flex
   height:35px
@@ -46,7 +47,8 @@ export default {
     line-height:35px
     width:25%
   .router-link-active .item
-    color:red
-    border-bottom:2px solid red
+    color:$color-theme
+    border-bottom:2px solid $color-theme
+    padding-bottom:10px
     width:20px
 </style>

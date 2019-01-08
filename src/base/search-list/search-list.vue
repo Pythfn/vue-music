@@ -1,7 +1,11 @@
 <template>
   <div class="search-list">
     <ul>
-      <li v-for="item in searchlist" class="search-Item">
+      <li
+       v-for="(item, index) in searchlist"
+       class="search-Item"
+       :key="index"
+      >
         <span class="item-text" @click="selectItem(item)">{{ item }}</span>
         <i class="icon-delete" @click="removeItem(item)"></i>
       </li>
@@ -13,7 +17,7 @@ export default {
   props: {
     searchlist: {
       type: Array,
-      default: []
+      default: () => []
     }
   },
   methods: {
@@ -25,7 +29,9 @@ export default {
     }
   }
 }
+
 </script>
+
 <style lang="stylus" scoped>
 @import '~common/stylus/variable.styl'
 .search-list

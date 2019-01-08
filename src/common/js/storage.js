@@ -3,8 +3,6 @@ import storage from 'good-storage'
 const SEARCH = '__search__'
 const MAX_SEARCH = 30
 
-
-
 export const saveSearch = function(query) {
   //  获取storage的search值，无则返回空数组
   let searchH = storage.get(SEARCH, [])

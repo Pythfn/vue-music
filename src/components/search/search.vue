@@ -140,5 +140,4 @@ export default {
       color:$color-text-l
       .text
         flex:1
-      
 </style>

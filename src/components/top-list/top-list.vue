@@ -35,22 +35,24 @@ export default {
   methods: {
     _getMusicList() {
       getMusicList(this.topId.id).then((res) => {
-        console.log(res)
-        this.topBg = res.topinfo.pic_album
-        this.topName = res.topinfo.ListName
+        //  console.log(res)
         //  解析jsoncallback方法为json对象
         if (res.code === 0) {
+          this.topBg = res.topinfo.pic_album
+          this.topName = res.topinfo.ListName
           this.data = res.songlist
-          console.log(this.data)
-          this.data.forEach((item) => {
-            let { data } = item
-            getSongVkey(data.songmid).then((res) => {
-              // console.log('这首歌的vkey获取到了')
-              const vkey = res.data.items[0].vkey
-              this.songList.push(createSong(data, vkey))
+          //  console.log(this.data)
+          setTimeout(()=> {
+            this.data.forEach((item) => {
+              let { data } = item
+              getSongVkey(data.songmid).then((res) => {
+                // console.log('这首歌的vkey获取到了')
+                const vkey = res.data.items[0].vkey
+                this.songList.push(createSong(data, vkey))
+              })
             })
-          })
-          //  console.log(this.songList)
+            //  console.log(this.songList)
+          }, 200)
         }
       })
     }
@@ -59,7 +61,10 @@ export default {
     if (!this.topId.id) {
       this.$router.push('/rank')
     }
-    this._getMusicList()
+    setTimeout(()=> {
+      this._getMusicList()
+    }, 0)
+
   }
 }
 </script>

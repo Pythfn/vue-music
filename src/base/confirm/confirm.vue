@@ -6,10 +6,10 @@
           {{ title }}
         </div>
         <div class="option">
-          <div class="no" @click="selectNo">
+          <div class="no" @click.stop="selectNo">
             <span>{{ no }}</span>
           </div>
-          <div class="yes" @click="selectYes">
+          <div class="yes" @click.stop="selectYes">
             <span>{{ yes }}</span>
           </div>
         </div>
@@ -79,6 +79,7 @@ export default {
       height:80px
       .title
         padding:13px 0
+        border-bottom:1px solid gray
       .option
         display:flex
         justify-content:center
@@ -86,6 +87,7 @@ export default {
           flex:1
           background:rgba(0,0,0,0.2)
           padding:10px 20px
+          border-right:1px solid gray
         .yes
           flex:1
           background:rgba(0,0,0,0.2)

@@ -38,12 +38,12 @@ export default {
     setPlayerHeightMixin(playList) {
       let height = playList.length ? this.PLAYER_HEIGHT : ''
       this.$refs.scroll.$el.style.bottom = height
-      console.log(height)
+      //  console.log(height)
     },
     _getTopList() {
       getTopList().then((res) => {
         this.rankList = res.data.topList
-        console.log(res.data)
+        //  console.log(res.data)
       })
     },
     selectRankItem(item) {

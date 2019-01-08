@@ -54,7 +54,7 @@ export const insterSong = function({ commit, state }, song) {
   if (sameIndex === -1) {
     sequenceList.splice(cIndex + 1, 0, song)
   } else {
-    console.log('已有该歌曲')
+    console.log('插入歌曲失败，已有该歌曲')
   }
 
   commit(types.SET_PLAY_LIST, playList)
@@ -62,22 +62,28 @@ export const insterSong = function({ commit, state }, song) {
   commit(types.SET_CURRENT_INDEX, newIndex)
   commit(types.SET_PLAYING, true)
   commit(types.SET_FULL_SCREEN, true)
-  console.log(playList)
-  console.log(sequenceList)
 }
 
-export const getSearchHistory = function({commit}) {
+export const getSearchHistory = function({ commit }) {
   commit(types.SET_SEARCH_HISTORY, saveSearch())
 }
 
-export const saveSearchHistory = function({commit}, query) {
+export const saveSearchHistory = function({ commit }, query) {
   commit(types.SET_SEARCH_HISTORY, saveSearch(query))
 }
 
-export const removeSearchHistory = function({commit}, query) {
+export const removeSearchHistory = function({ commit }, query) {
   commit(types.SET_SEARCH_HISTORY, removeSearch(query))
 }
 
-export const clearSearchHistory = function({commit}) {
+export const clearSearchHistory = function({ commit }) {
   commit(types.SET_SEARCH_HISTORY, clearSearch())
+}
+
+export const clearPlayList = function({ commit }) {
+  commit(types.SET_PLAY_LIST, [])
+  commit(types.SET_SEQUENCE_LIST, [])
+  commit(types.SET_CURRENT_INDEX, -1)
+  commit(types.SET_PLAYING, false)
+  commit(types.SET_FULL_SCREEN, false)
 }

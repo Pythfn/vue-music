@@ -182,9 +182,9 @@ export default {
       this.$nextTick(() => {
         if (newPlaying) {
           audio.play()
-          console.log(this.playList)
         } else {
           audio.pause()
+          console.log('暂停播放')
         }
       })
     },
