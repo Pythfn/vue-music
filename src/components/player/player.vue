@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <play-list v-if="isShowplayList"></play-list>
+    <play-list ref="playlistdom"></play-list>
     <audio ref="audio" :src="currentSong.url" @timeupdate="audioTime" @ended="onEnded"></audio>
   </div>
 </template>
@@ -70,8 +70,7 @@ export default {
   data() {
     return {
       currentAudioTime: '',
-      progressNum: 0,
-      isShowplayList: false
+      progressNum: 0
     }
   },
   computed: {
@@ -137,7 +136,7 @@ export default {
       this.setPlayMode(mode)
     },
     showPlayList() {
-      this.isShowplayList = !this.isShowplayList
+      this.$refs.playlistdom.isShow()
     },
     audioTime(e) {
       this.currentAudioTime = e.target.currentTime
@@ -332,5 +331,7 @@ export default {
         font-size:25px
         color:$color-theme
         margin-top:15px
-        right:15px
+        right:10px
+        width:30px
+        height:30px
 </style>

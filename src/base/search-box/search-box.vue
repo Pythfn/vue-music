@@ -23,7 +23,7 @@ export default {
     cleanQuery() {
       this.query = ''
     },
-    setHotQuery(newQ) {
+    setQuery(newQ) {
       this.query = newQ
     }
   },

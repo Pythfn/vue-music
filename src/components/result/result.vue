@@ -152,7 +152,6 @@ export default {
     loading
   }
 }
-
 </script>
 
 <style lang="stylus" scoped>
@@ -171,6 +170,9 @@ export default {
       .resultItem
         color:$color-text-l
         padding:10px 5px
+        text-overflow:ellipsis
+        overflow:hidden
+        white-space: nowrap
         i
           margin-right:10px
 </style>

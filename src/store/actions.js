@@ -1,6 +1,6 @@
 import * as types from './mutation-types'
 import { randomList } from 'common/js/util'
-import { saveSearch } from 'common/js/storage'
+import { saveSearch, removeSearch, clearSearch } from 'common/js/storage'
 
 //  解构赋值出action的commit 和 state方法
 export const startPlay = function({ commit, state }, { data, index }) {
@@ -66,8 +66,18 @@ export const insterSong = function({ commit, state }, song) {
   console.log(sequenceList)
 }
 
+export const getSearchHistory = function({commit}) {
+  commit(types.SET_SEARCH_HISTORY, saveSearch())
+}
 
 export const saveSearchHistory = function({commit}, query) {
-  commit(type.SET_SEARCH_HISTORY, saveSearch(query))
-  console.log('saveSearchdone')
+  commit(types.SET_SEARCH_HISTORY, saveSearch(query))
+}
+
+export const removeSearchHistory = function({commit}, query) {
+  commit(types.SET_SEARCH_HISTORY, removeSearch(query))
+}
+
+export const clearSearchHistory = function({commit}) {
+  commit(types.SET_SEARCH_HISTORY, clearSearch())
 }
