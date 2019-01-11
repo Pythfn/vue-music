@@ -38,6 +38,7 @@ export default {
     setPlayerHeightMixin(playList) {
       let height = playList.length ? this.PLAYER_HEIGHT : ''
       this.$refs.scroll.$el.style.bottom = height
+      this.$refs.scroll.refresh()
       //  console.log(height)
     },
     _getTopList() {

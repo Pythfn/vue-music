@@ -1,12 +1,6 @@
 <template>
   <transition name="slide">
-    <music-list
-     :data="data"
-     :songList="songList"
-     :title="topName"
-     :singerBg="topBg"
-     :songListIndex="true"
-    ></music-list>
+    <music-list :data="data" :songList="songList" :title="topName" :singerBg="topBg" :songListIndex="true"></music-list>
   </transition>
 </template>
 <script>
@@ -42,7 +36,7 @@ export default {
           this.topName = res.topinfo.ListName
           this.data = res.songlist
           //  console.log(this.data)
-          setTimeout(()=> {
+          setTimeout(() => {
             this.data.forEach((item) => {
               let { data } = item
               getSongVkey(data.songmid).then((res) => {
@@ -61,12 +55,12 @@ export default {
     if (!this.topId.id) {
       this.$router.push('/rank')
     }
-    setTimeout(()=> {
+    setTimeout(() => {
       this._getMusicList()
     }, 0)
-
   }
 }
+
 </script>
 <style lang="stylus" scoped>
 .slide-enter-active, .slide-leave-active

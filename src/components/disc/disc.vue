@@ -33,7 +33,9 @@ export default {
       getDiscSongList(this.discId.dissid).then((res) => {
         //  解析jsoncallback方法为json对象
         let temp = res.substring(12)
+        /* eslint-disable */
         let json = eval('(' + temp + ')')
+        /* eslint-disable */
         if (json.code === 0) {
           this.singerBg = json.cdlist[0].logo
           this.data = json.cdlist[0].songlist

@@ -83,8 +83,9 @@ export default {
     selectYes() {
       this.clearPlayList()
       this.$refs.confirm.isHide()
+      this.isShow()
     },
-    selectNo(){
+    selectNo() {
       this.$refs.confirm.isHide()
     },
     changeSong(song) {
@@ -111,6 +112,9 @@ export default {
     },
     //  滚动到当前播放的歌曲
     scrollToCurrentSong() {
+      if (this.listGroup === undefined) {
+        this.listGroup = this.$refs.listItemGroup
+      }
       let cindex = this.sequenceList.findIndex((item) => {
         return item.id === this.currentSong.id
       })
