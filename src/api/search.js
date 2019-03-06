@@ -16,7 +16,7 @@ export function getHotKey() {
 
 export function search(query, page, zhida, perpage) {
   //  perpage 总请求的页数
-  const url = '/getSearch'
+  const url = '/music/getSearch'
   //  浅拷贝
   const data = Object.assign({}, commonParams, {
     w: query,

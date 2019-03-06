@@ -50,7 +50,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
     before(apiRoutes) {
-      apiRoutes.get('/getDiscList', function (req, res) {
+      apiRoutes.get('/music/getDiscList', function (req, res) {
         var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
         axios.get(url, {
           headers: {
@@ -64,7 +64,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       }),
-      apiRoutes.get('/getDiscSongList', function (req, res) {
+      apiRoutes.get('/music/getDiscSongList', function (req, res) {
         var url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
         axios.get(url, {
           //  伪装请求
@@ -79,7 +79,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           console.log(e)
         })
       }),
-      apiRoutes.get('/getSearch', function (req, res) {
+      apiRoutes.get('/music/getSearch', function (req, res) {
         var url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp'
         axios.get(url, {
           //  伪装请求

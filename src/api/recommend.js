@@ -14,7 +14,7 @@ export function getRecommend() {
 }
 
 export function getDiscList() {
-  const url = '/getDiscList'
+  const url = '/music/getDiscList'
 
   const data = Object.assign({}, commonParams, {
     platform: 'yqq',
@@ -34,7 +34,7 @@ export function getDiscList() {
 }
 
 export function getDiscSongList(disstid) {
-  const url = '/getDiscSongList'
+  const url = '/music/getDiscSongList'
 
   const data = Object.assign({}, commonParams, {
     disstid,
