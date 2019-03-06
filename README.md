@@ -1,21 +1,13 @@
-# vue-music
+# vue-music 在线音乐播放器
 
-> vue music app
+> 一个基于Vue框架开发的在线音乐播放器，使用了QQ音乐最新的接口
 
-## Build Setup
-
+## 运行
 ``` bash
-# install dependencies
+# 进入根目录在命令行执行：
 npm install
-
-# serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
-npm run build
+<img src="https://github.com/alexxux/vue-music/blob/master/screenshot/screenshot1.png?raw=true"  width="300"> <img src="https://github.com/alexxux/vue-music/blob/master/screenshot/screenshot2.png?raw=true"  width="300">
+<img src="https://github.com/alexxux/vue-music/blob/master/screenshot/screenshot4.png?raw=true"  width="300"> <img src="https://github.com/alexxux/vue-music/blob/master/screenshot/screenshot5.png?raw=true"  width="300">
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
